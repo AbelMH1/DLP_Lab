@@ -5,12 +5,12 @@ import model.Expression;
 
 public class StructAccess extends AbstractASTNode implements Expression {
     private String field;
-    private Expression expression;
+    private Expression left;
 
-    public StructAccess(int line, int column, String field, Expression expression) {
+    public StructAccess(int line, int column, String field, Expression left) {
         super(line, column);
         this.field = field;
-        this.expression = expression;
+        this.left = left;
     }
 
     public String getField() {
@@ -21,11 +21,11 @@ public class StructAccess extends AbstractASTNode implements Expression {
         this.field = field;
     }
 
-    public Expression getExpression() {
-        return expression;
+    public Expression getLeft() {
+        return left;
     }
 
-    public void setExpression(Expression expression) {
-        this.expression = expression;
+    public void setLeft(Expression left) {
+        this.left = left;
     }
 }

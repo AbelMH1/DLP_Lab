@@ -4,18 +4,28 @@ import model.AbstractASTNode;
 import model.Expression;
 
 public class ArrayAccess extends AbstractASTNode implements Expression {
-    private Expression expression;
+    private Expression left;
+    private Expression access;
 
-    public ArrayAccess(int line, int column, Expression expression) {
+    public ArrayAccess(int line, int column, Expression left, Expression access) {
         super(line, column);
-        this.expression = expression;
+        this.left = left;
+        this.access = access;
     }
 
-    public Expression getExpression() {
-        return expression;
+    public Expression getLeft() {
+        return left;
     }
 
-    public void setExpression(Expression expression) {
-        this.expression = expression;
+    public void setLeft(Expression left) {
+        this.left = left;
+    }
+
+    public Expression getAccess() {
+        return access;
+    }
+
+    public void setAccess(Expression access) {
+        this.access = access;
     }
 }
