@@ -1,4 +1,4 @@
-// Generated from C:/Users/UO283274/Desktop/Lab/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/Abel/OneDrive/Documents/UniOvi/Asignaturas/Cuarto/Cuatrimestre 2/DLP/Laboratorio/DLP_Lab/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -17,7 +17,8 @@ public class PmmParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		TRASH=1, INT_CONSTANT=2;
+		TRASH=1, INT_CONSTANT=2, REAL_CONSTANT=3, CHAR_CONSTANT=4, CHAR_CONSTANT_N=5, 
+		CHAR_CONSTANT_T=6, COMENTARIO=7, IDENT=8;
 	public static final int
 		RULE_program = 0;
 	private static String[] makeRuleNames() {
@@ -29,12 +30,14 @@ public class PmmParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
+			null, null, null, null, null, "''\\n''", "''\\t''"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "TRASH", "INT_CONSTANT"
+			null, "TRASH", "INT_CONSTANT", "REAL_CONSTANT", "CHAR_CONSTANT", "CHAR_CONSTANT_N", 
+			"CHAR_CONSTANT_T", "COMENTARIO", "IDENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -121,10 +124,10 @@ public class PmmParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0002\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000"+
-		"\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0003\u0000\u0002\u0001"+
-		"\u0000\u0000\u0000\u0002\u0003\u0001\u0000\u0000\u0000\u0003\u0001\u0001"+
-		"\u0000\u0000\u0000\u0000";
+		"\u0004\u0001\b\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000\u0001"+
+		"\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0003\u0000\u0002\u0001\u0000"+
+		"\u0000\u0000\u0002\u0003\u0001\u0000\u0000\u0000\u0003\u0001\u0001\u0000"+
+		"\u0000\u0000\u0000";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
