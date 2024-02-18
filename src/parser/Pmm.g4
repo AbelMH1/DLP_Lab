@@ -29,11 +29,14 @@ CHAR_CONSTANT_NUM: '\'\\' INT_CONSTANT '\'';
 fragment
 CHAR_CONSTANT_TEXT: '\'' . '\'';
 
-CHAR_CONSTANT: CHAR_CONSTANT_NUM
-             | CHAR_CONSTANT_TEXT;
+//CHAR_CONSTANT_N: '\'\\n\'';
+//CHAR_CONSTANT_T: '\'\\t\'';
 
-CHAR_CONSTANT_N: '\'\\n\'';
-CHAR_CONSTANT_T: '\'\\t\'';
+CHAR_CONSTANT: CHAR_CONSTANT_NUM
+             | CHAR_CONSTANT_TEXT
+             | '\'\\n\''
+             | '\'\\t\'';
+
 
 //COMENTARIO_1LINEA: '#' .*? ('\n');
 fragment
@@ -41,7 +44,7 @@ COMENTARIO_1LINEA: '#' (~'\n')* '\n'?;
 fragment
 COMENTARIO_NLINEAS: '"""' .*? '"""';
 
-COMENTARIO: COMENTARIO_1LINEA
-          | COMENTARIO_NLINEAS;
+COMENTARIO: (COMENTARIO_1LINEA
+          | COMENTARIO_NLINEAS) -> skip;
 
-IDENT: (LETRA|'_') (LETRA|DIGITO|'_')*;
+ID: (LETRA|'_') (LETRA|DIGITO|'_')*;
