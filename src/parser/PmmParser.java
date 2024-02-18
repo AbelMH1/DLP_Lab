@@ -17,8 +17,7 @@ public class PmmParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		TRASH=1, INT_CONSTANT=2, REAL_CONSTANT=3, CHAR_CONSTANT=4, COMENTARIO=5, 
-		ID=6;
+		TRASH=1, COMENTARIO=2, ID=3, INT_CONSTANT=4, REAL_CONSTANT=5, CHAR_CONSTANT=6;
 	public static final int
 		RULE_program = 0;
 	private static String[] makeRuleNames() {
@@ -35,8 +34,7 @@ public class PmmParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "TRASH", "INT_CONSTANT", "REAL_CONSTANT", "CHAR_CONSTANT", "COMENTARIO", 
-			"ID"
+			null, "TRASH", "COMENTARIO", "ID", "INT_CONSTANT", "REAL_CONSTANT", "CHAR_CONSTANT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();

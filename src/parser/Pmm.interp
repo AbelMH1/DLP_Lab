@@ -10,11 +10,11 @@ null
 token symbolic names:
 null
 TRASH
+COMENTARIO
+ID
 INT_CONSTANT
 REAL_CONSTANT
 CHAR_CONSTANT
-COMENTARIO
-ID
 
 rule names:
 program
