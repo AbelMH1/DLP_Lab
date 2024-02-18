@@ -1,10 +1,9 @@
 package ast.statement;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
 
-public class Input extends AbstractASTNode implements Statement {
+public class Input extends AbstractStatement implements Statement {
     private Expression input;
 
     public Input(int line, int column, Expression input) {

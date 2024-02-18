@@ -1,16 +1,13 @@
 package ast.expression;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 
-public class StructAccess extends AbstractASTNode implements Expression {
+public class StructAccess extends AbstractExpression1Param implements Expression {
     private String field;
-    private Expression left;
 
-    public StructAccess(int line, int column, String field, Expression left) {
-        super(line, column);
+    public StructAccess(int line, int column, Expression left, String field) {
+        super(line, column, left);
         this.field = field;
-        this.left = left;
     }
 
     public String getField() {
@@ -21,11 +18,17 @@ public class StructAccess extends AbstractASTNode implements Expression {
         this.field = field;
     }
 
+    /*
+    * Acceso al parámetro "expression" del padre mediante otro nombre
+    * */
     public Expression getLeft() {
-        return left;
+        return super.getExpression();
     }
 
+    /*
+     * Modificación del parámetro "expression" del padre mediante otro nombre
+     * */
     public void setLeft(Expression left) {
-        this.left = left;
+        super.setExpression(left);
     }
 }

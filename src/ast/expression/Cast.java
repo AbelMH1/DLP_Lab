@@ -1,25 +1,14 @@
 package ast.expression;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Type;
 
-public class Cast extends AbstractASTNode implements Expression {
-    private Expression expression;
+public class Cast extends AbstractExpression1Param implements Expression {
     private Type type;
 
     public Cast(int line, int column, Expression expression, Type type) {
-        super(line, column);
-        this.expression = expression;
+        super(line, column, expression);
         this.type = type;
-    }
-
-    public Expression getExpression() {
-        return expression;
-    }
-
-    public void setExpression(Expression expression) {
-        this.expression = expression;
     }
 
     public Type getType() {

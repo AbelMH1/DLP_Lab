@@ -1,16 +1,25 @@
-package ast.statement;
+package ast.expression;
 
 import ast.Expression;
-import ast.Statement;
 
-public class Assignment extends AbstractStatement implements Statement {
+public class AbstractExpression2Param extends AbstractExpression implements Expression {
+    private String operator;
     private Expression left;
     private Expression right;
 
-    public Assignment(int line, int column, Expression left, Expression right) {
+    public AbstractExpression2Param(int line, int column, String operator, Expression left, Expression right) {
         super(line, column);
+        this.operator = operator;
         this.left = left;
         this.right = right;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public Expression getLeft() {

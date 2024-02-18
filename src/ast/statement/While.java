@@ -1,12 +1,11 @@
 package ast.statement;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
 
 import java.util.List;
 
-public class While extends AbstractASTNode implements Statement {
+public class While extends AbstractStatement implements Statement {
     private Expression condition;
     private List<Statement> body;
 

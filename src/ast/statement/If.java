@@ -1,12 +1,11 @@
 package ast.statement;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
 
 import java.util.List;
 
-public class If extends AbstractASTNode implements Statement {
+public class If extends AbstractStatement implements Statement {
     private Expression condition;
     private List<Statement> ifPart;
     private List<Statement> elsePart;

@@ -1,9 +1,8 @@
 package ast.expression;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 
-public abstract class Variable extends AbstractASTNode implements Expression {
+public abstract class Variable extends AbstractExpression implements Expression {
     private String name;
 
     public Variable(int line, int column, String name) {

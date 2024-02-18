@@ -1,17 +1,16 @@
 package ast.definition;
 
-import ast.AbstractASTNode;
 import ast.Definition;
 import ast.Statement;
 import ast.Type;
 
 import java.util.List;
 
-public class FunctionDefinition extends AbstractASTNode implements Definition {
+public class FunctionDefinition extends AbstractDefinition implements Definition {
     private List<Statement> body;
 
-    public FunctionDefinition(int line, int column, List<Statement> body) {
-        super(line, column);
+    public FunctionDefinition(int line, int column, Type type, String name, List<Statement> body) {
+        super(line, column, type, name);
         this.body = body;
     }
 
@@ -21,17 +20,5 @@ public class FunctionDefinition extends AbstractASTNode implements Definition {
 
     public void setBody(List<Statement> body) {
         this.body = body;
-    }
-
-    @Override
-    public Type getType() {
-        // TODO
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        // TODO
-        return null;
     }
 }

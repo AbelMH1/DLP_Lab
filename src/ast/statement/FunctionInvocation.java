@@ -1,13 +1,12 @@
 package ast.statement;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
 import ast.expression.Variable;
 
 import java.util.List;
 
-public class FunctionInvocation extends AbstractASTNode implements Expression, Statement {
+public class FunctionInvocation extends AbstractStatement implements Expression, Statement {
     private Variable name;
     private List<Expression> parameters;
 

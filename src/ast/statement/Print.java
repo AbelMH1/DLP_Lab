@@ -1,12 +1,11 @@
 package ast.statement;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
 
 import java.util.List;
 
-public class Print extends AbstractASTNode implements Statement {
+public class Print extends AbstractStatement implements Statement {
     private List<Expression> parameters;
 
     public Print(int line, int column, List<Expression> parameters) {

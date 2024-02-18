@@ -1,9 +1,8 @@
 package ast.expression;
 
-import ast.AbstractASTNode;
 import ast.Expression;
 
-public class ArrayAccess extends AbstractASTNode implements Expression {
+public class ArrayAccess extends AbstractExpression implements Expression {
     private Expression left;
     private Expression access;
 
