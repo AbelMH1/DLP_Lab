@@ -1,8 +1,73 @@
 grammar Pmm;	
 
-program:
+program: definition* EOF
        ;
 
+definition: varDefinition
+            | funcDefinition
+;
+
+varDefinition: idents ':' type ';'
+;
+
+idents: ID
+        | idents ',' ID
+;
+
+funcDefinition: 'def' ID '(' ')'
+;
+
+paramDefinition: ID
+                |
+;
+
+type: simpleType
+    | '[' INT_CONSTANT ']' type
+    | 'struct' '{' varDefinition '}'
+;
+
+simpleType: 'int'
+            | 'double'
+            | 'char'
+;
+
+statement: 'print' params ';'
+            | 'input' params ';'
+            | 'return' expression ';'
+            | ID '(' paramsOpt ')' ';'
+            | expression '=' expression ';'
+            | 'if' expression ':' body ('else' ':' body)?
+            | 'while' expression ':' statement*
+;
+
+body: '{'? statement '}'?
+    | '{' statement+ '}'
+;
+
+
+expression: INT_CONSTANT
+            | REAL_CONSTANT
+            | CHAR_CONSTANT
+            | ID
+            | ID '(' paramsOpt ')'
+            |'(' expression ')'
+            |expression '[' expression ']'
+            |expression '.' ID
+            |'(' type ')' expression
+            |'-' expression
+            |'!' expression
+            |/* <assoc=left> */ expression ('*'|'/'|'%') expression
+            |expression ('+'|'-') expression
+            |expression ('>'|'>='|'<'|'<='|'!='|'==') expression
+            |expression ('&&'|'||') expression
+            ;
+
+paramsOpt: // Vacio
+        | params
+;
+params: expression
+        | params ',' expression
+;
 
 
 /* LEXER PATTERNS */
