@@ -1,4 +1,4 @@
-// Generated from C:/Users/UO283274/Desktop/Lab/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/Abel/OneDrive/Documents/UniOvi/Asignaturas/Cuarto/Cuatrimestre 2/DLP/Laboratorio/DLP_Lab/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -76,12 +76,6 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExpression(PmmParser.ExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PmmParser#paramsOpt}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParamsOpt(PmmParser.ParamsOptContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PmmParser#params}.
 	 * @param ctx the parse tree

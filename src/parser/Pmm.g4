@@ -14,16 +14,16 @@ idents: ID
         | idents ',' ID
 ;
 
-funcDefinition: 'def' ID '(' ')'
+funcDefinition: 'def' ID '(' paramDefinition? ')' ':' simpleType? '{' varDefinition* statement* '}'
 ;
 
-paramDefinition: ID
-                |
+paramDefinition: ID ':' simpleType
+                | paramDefinition ',' ID ':' simpleType
 ;
 
 type: simpleType
     | '[' INT_CONSTANT ']' type
-    | 'struct' '{' varDefinition '}'
+    | 'struct' '{' varDefinition+ '}'
 ;
 
 simpleType: 'int'
@@ -34,10 +34,10 @@ simpleType: 'int'
 statement: 'print' params ';'
             | 'input' params ';'
             | 'return' expression ';'
-            | ID '(' paramsOpt ')' ';'
+            | ID '(' params? ')' ';'
             | expression '=' expression ';'
             | 'if' expression ':' body ('else' ':' body)?
-            | 'while' expression ':' statement*
+            | 'while' expression ':' body
 ;
 
 body: '{'? statement '}'?
@@ -49,11 +49,11 @@ expression: INT_CONSTANT
             | REAL_CONSTANT
             | CHAR_CONSTANT
             | ID
-            | ID '(' paramsOpt ')'
+            | ID '(' params? ')'
             |'(' expression ')'
             |expression '[' expression ']'
             |expression '.' ID
-            |'(' type ')' expression
+            |'(' simpleType ')' expression
             |'-' expression
             |'!' expression
             |/* <assoc=left> */ expression ('*'|'/'|'%') expression
@@ -62,9 +62,6 @@ expression: INT_CONSTANT
             |expression ('&&'|'||') expression
             ;
 
-paramsOpt: // Vacio
-        | params
-;
 params: expression
         | params ',' expression
 ;
