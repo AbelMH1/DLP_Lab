@@ -1,7 +1,9 @@
 grammar Pmm;	
 
-program: definition* EOF
+program: definition* main EOF
        ;
+main: 'def' 'main' '(' ')' ':' '{' varDefinition* statement* '}'
+;
 
 definition: varDefinition
             | funcDefinition
@@ -59,7 +61,8 @@ expression: INT_CONSTANT
             |/* <assoc=left> */ expression ('*'|'/'|'%') expression
             |expression ('+'|'-') expression
             |expression ('>'|'>='|'<'|'<='|'!='|'==') expression
-            |expression ('&&'|'||') expression
+            |expression '&&' expression
+            |expression '||' expression
             ;
 
 params: expression
