@@ -5,10 +5,11 @@ import ast.Type;
 
 import java.util.List;
 
-public class Struct implements Type {
+public class StructType extends AbstractType implements Type {
     private List<RecordField> fields;
 
-    public Struct(List<RecordField> fields) {
+    public StructType(List<RecordField> fields) {
+        super(0, 0);
         this.fields = fields;
     }
 

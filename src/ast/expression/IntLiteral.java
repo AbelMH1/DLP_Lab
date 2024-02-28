@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.Expression;
 
-public abstract class IntLiteral extends AbstractExpression implements Expression {
+public class IntLiteral extends AbstractExpression implements Expression {
     private int value;
 
     public IntLiteral(int line, int column, int value) {

@@ -5,11 +5,12 @@ import ast.definition.VariableDefinition;
 
 import java.util.List;
 
-public class FunctionType implements Type {
+public class FunctionType extends AbstractType implements Type {
     private Type returnType;
     private List<VariableDefinition> params;
 
     public FunctionType(Type returnType, List<VariableDefinition> params) {
+        super(0, 0);
         this.returnType = returnType;
         this.params = params;
     }

@@ -2,11 +2,12 @@ package ast.type;
 
 import ast.Type;
 
-public class Array implements Type {
+public class ArrayType extends AbstractType implements Type {
     private int size;
     private Type of;
 
-    public Array(int size, Type of) {
+    public ArrayType(int size, Type of) {
+        super(0, 0);
         this.size = size;
         this.of = of;
     }
