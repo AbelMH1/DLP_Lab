@@ -1,5 +1,12 @@
-// Generated from C:/Users/Abel/OneDrive/Documents/UniOvi/Asignaturas/Cuarto/Cuatrimestre 2/DLP/Laboratorio/DLP_Lab/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/UO283274/Desktop/Lab/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
+
+    import ast.*;
+    import ast.definition.*;
+    import ast.expression.*;
+    import ast.statement.*;
+    import ast.type.*;
+
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

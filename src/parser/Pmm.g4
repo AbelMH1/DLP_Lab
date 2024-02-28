@@ -1,6 +1,17 @@
-grammar Pmm;	
+grammar Pmm;
+@header{
+    import ast.*;
+    import ast.definition.*;
+    import ast.expression.*;
+    import ast.statement.*;
+    import ast.type.*;
+}
+// TODAS LAS REGLAS TIENEN QUE MODIFICAR AST, SINO MALO. PONER NO TERMINALES EN MINUSCULA Y TERMINALES EN MAYUSCULA.
+// $<alias>.ast   o   $ID.getLine(), $ID.getCharPositionInLine(), $ID.text
+// returns [] Locals[List<String> temp = new... , aquí variables temporales]
 
-program: definition* main EOF
+program returns [Program ast]:
+    definition* main EOF
        ;
 main: 'def' 'main' '(' ')' ':' '{' varDefinition* statement* '}'
 ;
@@ -47,26 +58,28 @@ body: '{'? statement '}'?
 ;
 
 
-expression: INT_CONSTANT
-            | REAL_CONSTANT
-            | CHAR_CONSTANT
-            | ID
-            | ID '(' params? ')'
-            |'(' expression ')'
-            |expression '[' expression ']'
-            |expression '.' ID
-            |'(' simpleType ')' expression
-            |'-' expression
-            |'!' expression
-            |/* <assoc=left> */ expression ('*'|'/'|'%') expression
-            |expression ('+'|'-') expression
-            |expression ('>'|'>='|'<'|'<='|'!='|'==') expression
-            |expression '&&' expression
-            |expression '||' expression
+expression returns [Expression ast] locals[Variable v1]:
+            INT_CONSTANT            {$ast = new IntLiteral($INT_CONSTANT.getLine(), $INT_CONSTANT.getCharPositionInLine()+1, LexerHelper.lexemeToInt($INT_CONSTANT.text)); }
+            | REAL_CONSTANT         {$ast = new DoubleLiteral($REAL_CONSTANT.getLine(), $REAL_CONSTANT.getCharPositionInLine()+1, LexerHelper.lexemeToReal($REAL_CONSTANT.text)); }
+            | CHAR_CONSTANT         {$ast = new CharLiteral($CHAR_CONSTANT.getLine(), $CHAR_CONSTANT.getCharPositionInLine()+1, LexerHelper.lexemeToChar($CHAR_CONSTANT.text)); }
+            | ID                    {$ast = new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text); }
+            | ID '(' params? ')'    /* REVISAR */{$ast = new FunctionInvocation($ID.getLine(), $ID.getCharPositionInLine()+1, new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text), $params.list); }
+            |'(' expression1 = expression ')'   {$ast = $expression1.ast}
+            | expression1 = expression OP='[' expression2 = expression ']' {$ast = new ArrayAccess($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast, $expression2.ast); }
+            | expression1 = expression OP='.' ID   {$ast = new StructAccess($OP.getLine(), $OP.getCharPositionInLine()+1, &expression1.ast, $ID.text); }
+            | OP='(' simpleType ')' expression1 = expression    {$ast = new Cast($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast, $simpleType.ast); }
+            |'-' expression1 = expression   {$ast = new }
+            |'!' expression1 = expression   {$ast = new }
+            |/* <assoc=left> */ expression1 = expression ('*'|'/'|'%') expression2 = expression {$ast = new }
+            | expression1 = expression ('+'|'-') expression2 = expression   {$ast = new }
+            | expression1 = expression ('>'|'>='|'<'|'<='|'!='|'==') expression2 = expression   {$ast = new }
+            | expression1 = expression '&&' expression2 = expression    {$ast = new }
+            | expression1 = expression '||' expression2 = expression    {$ast = new }
             ;
 
-params: expression
-        | params ',' expression
+params returns [List<Expression> list = new ArrayList<>()]:
+        expression {$list.add($expression.ast); }
+        | params1 = params ',' expression {$list.addAll($params1.list); $list.add($expression.ast); }
 ;
 
 
