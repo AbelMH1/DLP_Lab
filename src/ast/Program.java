@@ -2,7 +2,7 @@ package ast;
 
 import java.util.List;
 
-public abstract class Program extends AbstractASTNode implements ASTNode {
+public class Program extends AbstractASTNode implements ASTNode {
     private List<Definition> body;
 
     public Program(int line, int column, List<Definition> body) {
