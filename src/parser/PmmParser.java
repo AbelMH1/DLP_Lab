@@ -6,6 +6,7 @@ package parser;
     import ast.expression.*;
     import ast.statement.*;
     import ast.type.*;
+    import java.util.HashSet;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -379,7 +380,18 @@ public class PmmParser extends Parser {
 			((VarDefinitionContext)_localctx).type = type();
 			setState(75);
 			match(T__7);
-			((VarDefinitionContext)_localctx).idents.list.forEach((name -> _localctx.list.add(new VariableDefinition(((VarDefinitionContext)_localctx).OP.getLine(), ((VarDefinitionContext)_localctx).OP.getCharPositionInLine()+1, ((VarDefinitionContext)_localctx).type.ast, name)))); 
+
+			        HashSet<String> e = new HashSet<>();
+			        for(String name : ((VarDefinitionContext)_localctx).idents.list) {
+			            if(e.contains(name)){
+			                _localctx.list.add(new VariableDefinition(((VarDefinitionContext)_localctx).OP.getLine(), ((VarDefinitionContext)_localctx).OP.getCharPositionInLine()+1, new ErrorType(((VarDefinitionContext)_localctx).OP.getLine(), ((VarDefinitionContext)_localctx).OP.getCharPositionInLine()+1, "No se pueden definir dos variables con el mismo nombre en el mismo ámbito"), name));
+			            }
+			            else {
+			                e.add(name);
+			                _localctx.list.add(new VariableDefinition(((VarDefinitionContext)_localctx).OP.getLine(), ((VarDefinitionContext)_localctx).OP.getCharPositionInLine()+1, ((VarDefinitionContext)_localctx).type.ast, name));
+			            }
+			        }
+			    
 			}
 		}
 		catch (RecognitionException re) {
@@ -780,7 +792,20 @@ public class PmmParser extends Parser {
 				} while ( _la==ID );
 				setState(158);
 				match(T__6);
-				((TypeContext)_localctx).ast =  new StructType(_localctx.recordFields.stream().map(varDef -> new RecordField(varDef.getLine(), varDef.getColumn(), varDef.getName(),varDef.getType())).toList()); 
+
+				        List<RecordField> list = new ArrayList<>();
+				        HashSet<String> e = new HashSet<>();
+				        for(VariableDefinition var : _localctx.recordFields) {
+				            if(e.contains(var.getName())){
+				                list.add(new RecordField(var.getLine(), var.getColumn(), var.getName(), new ErrorType(var.getLine(), var.getColumn(), "No se pueden definir dos campos con el mismo nombre dentro de un struct")));
+				            }
+				            else {
+				                e.add(var.getName());
+				                list.add(new RecordField(var.getLine(), var.getColumn(), var.getName(), var.getType()));
+				            }
+				        }
+				        ((TypeContext)_localctx).ast =  new StructType(list);
+				    
 				}
 				break;
 			default:

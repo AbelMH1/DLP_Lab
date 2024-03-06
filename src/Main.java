@@ -1,6 +1,3 @@
-import ast.ASTNode;
-import ast.definition.VariableDefinition;
-import ast.type.ErrorType;
 import errorhandler.ErrorHandler;
 import parser.*;
 
@@ -9,10 +6,6 @@ import org.antlr.v4.runtime.*;
 import ast.Program;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorView;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 public class Main {
 	
@@ -40,32 +33,6 @@ public class Main {
 			// * The AST is shown
 			IntrospectorModel model=new IntrospectorModel("Program", ast);
 			new IntrospectorView("Introspector", model);
-		}
-
-
-		List<String> idents = new ArrayList<>();
-		List<VariableDefinition> list = new ArrayList<>();
-		HashSet<String> e = new HashSet<>();
-//		for(String name : idents) {
-//			if(e.contains(name)){
-//				list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new ErrorType(), name));
-//			}
-//			else {
-//				e.add(name);
-//				list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name));
-//			}
-//		}
-		List<VariableDefinition> recordFields = new ArrayList<>();
-		List<VariableDefinition> recordFields = new ArrayList<>();
-		for(VariableDefinition var : recordFields) {
-			if(e.contains(var.getName())){
-				list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new ErrorType($OP.getLine(), $OP.getCharPositionInLine()+1, "No se pueden definir dos variables con el mismo nombre en el mismo ámbito"), name));
-				new StructType($recordFields.stream().map(varDef -> new RecordField(varDef.getLine(), varDef.getColumn(), varDef.getName(),varDef.getType())).toList()); }
-			}
-			else {
-				e.add(var.getName());
-				list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name));
-			}
 		}
 	}
 }

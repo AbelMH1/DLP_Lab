@@ -5,6 +5,7 @@ grammar Pmm;
     import ast.expression.*;
     import ast.statement.*;
     import ast.type.*;
+    import java.util.HashSet;
 }
 // TODAS LAS REGLAS TIENEN QUE MODIFICAR AST, SINO MALO. PONER NO TERMINALES EN MINUSCULA Y TERMINALES EN MAYUSCULA.
 // $<alias>.ast   o   $ID.getLine(), $ID.getCharPositionInLine(), $ID.text
@@ -24,16 +25,15 @@ definition returns [List<Definition> list = new ArrayList<>()]:
 ;
 
 varDefinition returns [List<VariableDefinition> list = new ArrayList<>()]:
-    idents OP=':' type ';'     {$idents.list.forEach((name -> $list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name)))); }
-    {
+    idents OP=':' type ';' {
         HashSet<String> e = new HashSet<>();
-        for(String name : $idents) {
+        for(String name : $idents.list) {
             if(e.contains(name)){
-                list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new ErrorType($OP.getLine(), $OP.getCharPositionInLine()+1, "No se pueden definir dos variables con el mismo nombre en el mismo ámbito"), name));
+                $list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new ErrorType($OP.getLine(), $OP.getCharPositionInLine()+1, "No se pueden definir dos variables con el mismo nombre en el mismo ámbito"), name));
             }
             else {
                 e.add(name);
-                list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name));
+                $list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name));
             }
         }
     }
@@ -56,18 +56,19 @@ paramDefinition returns [List<VariableDefinition> list = new ArrayList<>()]:
 type returns [Type ast] locals[List<VariableDefinition> recordFields = new ArrayList<>()]:
     simpleType                          {$ast = $simpleType.ast; }
     | '[' INT_CONSTANT ']' type         {$ast = new ArrayType(LexerHelper.lexemeToInt($INT_CONSTANT.text), $type.ast); }
-    | 'struct' '{' (varDefinition {$recordFields.addAll($varDefinition.list); })+ '}'    {$ast = new StructType($recordFields.stream().map(varDef -> new RecordField(varDef.getLine(), varDef.getColumn(), varDef.getName(),varDef.getType())).toList()); }
-    {
+    | 'struct' '{' (varDefinition {$recordFields.addAll($varDefinition.list); })+ '}' {
+        List<RecordField> list = new ArrayList<>();
         HashSet<String> e = new HashSet<>();
         for(VariableDefinition var : $recordFields) {
-            if(e.contains(name)){
-                list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new ErrorType($OP.getLine(), $OP.getCharPositionInLine()+1, "No se pueden definir dos variables con el mismo nombre en el mismo ámbito"), name));
+            if(e.contains(var.getName())){
+                list.add(new RecordField(var.getLine(), var.getColumn(), var.getName(), new ErrorType(var.getLine(), var.getColumn(), "No se pueden definir dos campos con el mismo nombre dentro de un struct")));
             }
             else {
-                e.add(name);
-                list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name));
+                e.add(var.getName());
+                list.add(new RecordField(var.getLine(), var.getColumn(), var.getName(), var.getType()));
             }
         }
+        $ast = new StructType(list);
     }
 ;
 

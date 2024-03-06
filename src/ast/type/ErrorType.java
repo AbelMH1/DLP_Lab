@@ -3,7 +3,7 @@ package ast.type;
 import ast.Type;
 import errorhandler.ErrorHandler;
 
-public class ErrorType  extends AbstractType implements Type {
+public class ErrorType extends AbstractType implements Type {
     private String message;
 
     public ErrorType(int line, int column, String message) {
@@ -14,8 +14,8 @@ public class ErrorType  extends AbstractType implements Type {
 
     @Override
     public String toString() {
-        return "ErrorType{" +
-                "message='" + message + '\'' +
-                '}';
+        return "Error en la línea " + getLine() +
+                ", columna " + getColumn() + ": " +
+                message;
     }
 }
