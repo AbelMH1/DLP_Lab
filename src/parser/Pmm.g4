@@ -25,6 +25,18 @@ definition returns [List<Definition> list = new ArrayList<>()]:
 
 varDefinition returns [List<VariableDefinition> list = new ArrayList<>()]:
     idents OP=':' type ';'     {$idents.list.forEach((name -> $list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name)))); }
+    {
+        HashSet<String> e = new HashSet<>();
+        for(String name : $idents) {
+            if(e.contains(name)){
+                list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new ErrorType($OP.getLine(), $OP.getCharPositionInLine()+1, "No se pueden definir dos variables con el mismo nombre en el mismo ámbito"), name));
+            }
+            else {
+                e.add(name);
+                list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name));
+            }
+        }
+    }
 ;
 
 idents returns [List<String> list = new ArrayList<>()]:
@@ -45,6 +57,18 @@ type returns [Type ast] locals[List<VariableDefinition> recordFields = new Array
     simpleType                          {$ast = $simpleType.ast; }
     | '[' INT_CONSTANT ']' type         {$ast = new ArrayType(LexerHelper.lexemeToInt($INT_CONSTANT.text), $type.ast); }
     | 'struct' '{' (varDefinition {$recordFields.addAll($varDefinition.list); })+ '}'    {$ast = new StructType($recordFields.stream().map(varDef -> new RecordField(varDef.getLine(), varDef.getColumn(), varDef.getName(),varDef.getType())).toList()); }
+    {
+        HashSet<String> e = new HashSet<>();
+        for(VariableDefinition var : $recordFields) {
+            if(e.contains(name)){
+                list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new ErrorType($OP.getLine(), $OP.getCharPositionInLine()+1, "No se pueden definir dos variables con el mismo nombre en el mismo ámbito"), name));
+            }
+            else {
+                e.add(name);
+                list.add(new VariableDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, $type.ast, name));
+            }
+        }
+    }
 ;
 
 simpleType returns [Type ast]:
