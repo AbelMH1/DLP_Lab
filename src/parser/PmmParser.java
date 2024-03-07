@@ -269,7 +269,7 @@ public class PmmParser extends Parser {
 			}
 			setState(61);
 			match(T__6);
-			((MainContext)_localctx).ast =  new FunctionDefinition(((MainContext)_localctx).OP.getLine(), ((MainContext)_localctx).OP.getCharPositionInLine()+1, new FunctionType(new VoidType(), new ArrayList<VariableDefinition>()), (((MainContext)_localctx).OP!=null?((MainContext)_localctx).OP.getText():null), _localctx.funcBody); 
+			((MainContext)_localctx).ast =  new FunctionDefinition(((MainContext)_localctx).OP.getLine(), ((MainContext)_localctx).OP.getCharPositionInLine()+1, new FunctionType(VoidType.getInstance(), new ArrayList<VariableDefinition>()), (((MainContext)_localctx).OP!=null?((MainContext)_localctx).OP.getText():null), _localctx.funcBody); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -598,7 +598,7 @@ public class PmmParser extends Parser {
 			}
 			setState(119);
 			match(T__6);
-			((FuncDefinitionContext)_localctx).ast =  new FunctionDefinition(((FuncDefinitionContext)_localctx).ID.getLine(), ((FuncDefinitionContext)_localctx).ID.getCharPositionInLine()+1, new FunctionType(((FuncDefinitionContext)_localctx).simpleType != null ? ((FuncDefinitionContext)_localctx).simpleType.ast : new VoidType(), ((FuncDefinitionContext)_localctx).paramDefinition != null ? ((FuncDefinitionContext)_localctx).paramDefinition.list : new ArrayList<VariableDefinition>()), (((FuncDefinitionContext)_localctx).ID!=null?((FuncDefinitionContext)_localctx).ID.getText():null), _localctx.funcBody); 
+			((FuncDefinitionContext)_localctx).ast =  new FunctionDefinition(((FuncDefinitionContext)_localctx).ID.getLine(), ((FuncDefinitionContext)_localctx).ID.getCharPositionInLine()+1, new FunctionType(((FuncDefinitionContext)_localctx).simpleType != null ? ((FuncDefinitionContext)_localctx).simpleType.ast : VoidType.getInstance(), ((FuncDefinitionContext)_localctx).paramDefinition != null ? ((FuncDefinitionContext)_localctx).paramDefinition.list : new ArrayList<VariableDefinition>()), (((FuncDefinitionContext)_localctx).ID!=null?((FuncDefinitionContext)_localctx).ID.getText():null), _localctx.funcBody); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -849,7 +849,7 @@ public class PmmParser extends Parser {
 				{
 				setState(163);
 				match(T__12);
-				((SimpleTypeContext)_localctx).ast =  new IntType(); 
+				((SimpleTypeContext)_localctx).ast =  IntType.getInstance(); 
 				}
 				break;
 			case T__13:
@@ -857,7 +857,7 @@ public class PmmParser extends Parser {
 				{
 				setState(165);
 				match(T__13);
-				((SimpleTypeContext)_localctx).ast =  new DoubleType(); 
+				((SimpleTypeContext)_localctx).ast =  DoubleType.getInstance(); 
 				}
 				break;
 			case T__14:
@@ -865,7 +865,7 @@ public class PmmParser extends Parser {
 				{
 				setState(167);
 				match(T__14);
-				((SimpleTypeContext)_localctx).ast =  new CharType(); 
+				((SimpleTypeContext)_localctx).ast =  CharType.getInstance(); 
 				}
 				break;
 			default:
@@ -1296,7 +1296,7 @@ public class PmmParser extends Parser {
 			case 9:
 				{
 				setState(271);
-				match(T__24);
+				((ExpressionContext)_localctx).OP = match(T__24);
 				setState(272);
 				((ExpressionContext)_localctx).expression1 = expression(6);
 				((ExpressionContext)_localctx).ast =  new LogicalNot(((ExpressionContext)_localctx).OP.getLine(), ((ExpressionContext)_localctx).OP.getCharPositionInLine()+1, ((ExpressionContext)_localctx).expression1.ast); 

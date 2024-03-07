@@ -16,7 +16,7 @@ program returns [Program ast] locals[List<Definition> progBody = new ArrayList<>
 ;
 
 main returns [FunctionDefinition ast] locals[List<Statement> funcBody = new ArrayList<>()]:
-    'def' OP='main' '(' ')' ':' '{' (varDefinition {$funcBody.addAll($varDefinition.list); })* (statement {$funcBody.addAll($statement.list); })* '}' {$ast = new FunctionDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new FunctionType(new VoidType(), new ArrayList<VariableDefinition>()), $OP.text, $funcBody); }
+    'def' OP='main' '(' ')' ':' '{' (varDefinition {$funcBody.addAll($varDefinition.list); })* (statement {$funcBody.addAll($statement.list); })* '}' {$ast = new FunctionDefinition($OP.getLine(), $OP.getCharPositionInLine()+1, new FunctionType(VoidType.getInstance(), new ArrayList<VariableDefinition>()), $OP.text, $funcBody); }
 ;
 
 definition returns [List<Definition> list = new ArrayList<>()]:
@@ -45,7 +45,7 @@ idents returns [List<String> list = new ArrayList<>()]:
 ;
 
 funcDefinition returns [FunctionDefinition ast] locals[List<Statement> funcBody = new ArrayList<>()]:
-    'def' ID '(' paramDefinition? ')' ':' simpleType? '{' (varDefinition {$funcBody.addAll($varDefinition.list); })* (statement {$funcBody.addAll($statement.list); })* '}' {$ast = new FunctionDefinition($ID.getLine(), $ID.getCharPositionInLine()+1, new FunctionType($simpleType.ctx != null ? $simpleType.ast : new VoidType(), $paramDefinition.ctx != null ? $paramDefinition.list : new ArrayList<VariableDefinition>()), $ID.text, $funcBody); }
+    'def' ID '(' paramDefinition? ')' ':' simpleType? '{' (varDefinition {$funcBody.addAll($varDefinition.list); })* (statement {$funcBody.addAll($statement.list); })* '}' {$ast = new FunctionDefinition($ID.getLine(), $ID.getCharPositionInLine()+1, new FunctionType($simpleType.ctx != null ? $simpleType.ast : VoidType.getInstance(), $paramDefinition.ctx != null ? $paramDefinition.list : new ArrayList<VariableDefinition>()), $ID.text, $funcBody); }
 ;
 
 paramDefinition returns [List<VariableDefinition> list = new ArrayList<>()]:
@@ -73,9 +73,9 @@ type returns [Type ast] locals[List<VariableDefinition> recordFields = new Array
 ;
 
 simpleType returns [Type ast]:
-            'int'       {$ast = new IntType(); }
-            | 'double'  {$ast = new DoubleType(); }
-            | 'char'    {$ast = new CharType(); }
+            'int'       {$ast = IntType.getInstance(); }
+            | 'double'  {$ast = DoubleType.getInstance(); }
+            | 'char'    {$ast = CharType.getInstance(); }
 ;
 
 statement returns [List<Statement> list = new ArrayList<>()]:
@@ -105,7 +105,7 @@ expression returns [Expression ast]:
             | expression1 = expression OP='.' ID   {$ast = new StructAccess($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast, $ID.text); }
             | OP='(' simpleType ')' expression1 = expression    {$ast = new Cast($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast, $simpleType.ast); }
             | OP='-' expression1 = expression   {$ast = new UnaryMinus($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast); }
-            |'!' expression1 = expression       {$ast = new LogicalNot($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast); }
+            | OP='!' expression1 = expression       {$ast = new LogicalNot($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast); }
             |/* <assoc=left> */ expression1 = expression OP=('*'|'/'|'%') expression2 = expression  {$ast = new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
             | expression1 = expression OP=('+'|'-') expression2 = expression                        {$ast = new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
             | expression1 = expression OP=('>'|'>='|'<'|'<='|'!='|'==') expression2 = expression    {$ast = new Comparison($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
