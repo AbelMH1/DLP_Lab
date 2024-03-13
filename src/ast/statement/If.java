@@ -2,6 +2,7 @@ package ast.statement;
 
 import ast.Expression;
 import ast.Statement;
+import visitor.Visitor;
 
 import java.util.List;
 
@@ -39,5 +40,10 @@ public class If extends AbstractStatement implements Statement {
 
     public void setElsePart(List<Statement> elsePart) {
         this.elsePart = elsePart;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

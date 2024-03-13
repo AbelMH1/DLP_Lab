@@ -1,6 +1,7 @@
 package ast.type;
 
 import ast.Type;
+import visitor.Visitor;
 
 public class CharType extends AbstractType implements Type {
     private static CharType instance;
@@ -14,5 +15,10 @@ public class CharType extends AbstractType implements Type {
             instance = new CharType();
         }
         return instance;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

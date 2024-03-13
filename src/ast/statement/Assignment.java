@@ -2,6 +2,7 @@ package ast.statement;
 
 import ast.Expression;
 import ast.Statement;
+import visitor.Visitor;
 
 public class Assignment extends AbstractStatement implements Statement {
     private Expression left;
@@ -27,5 +28,10 @@ public class Assignment extends AbstractStatement implements Statement {
 
     public void setRight(Expression right) {
         this.right = right;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

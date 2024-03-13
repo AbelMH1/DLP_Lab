@@ -1,6 +1,7 @@
 package ast.expression;
 
 import ast.Expression;
+import visitor.Visitor;
 
 public class StructAccess extends AbstractExpression1Param implements Expression {
     private String field;
@@ -19,8 +20,8 @@ public class StructAccess extends AbstractExpression1Param implements Expression
     }
 
     /*
-    * Acceso al parámetro "expression" del padre mediante otro nombre
-    * */
+     * Acceso al parámetro "expression" del padre mediante otro nombre
+     * */
     public Expression getLeft() {
         return super.getExpression();
     }
@@ -30,5 +31,10 @@ public class StructAccess extends AbstractExpression1Param implements Expression
      * */
     public void setLeft(Expression left) {
         super.setExpression(left);
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }
