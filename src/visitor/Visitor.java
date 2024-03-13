@@ -17,7 +17,7 @@ Una clase Visitor debe plantearse para cada método siempre tres cuestiones:
 public interface Visitor<TP, TR> {
 
     // General
-    TR visit(Program program, TP param);
+    TR visit(Program e, TP param);
 
     TR visit(RecordField e, TP param);
 
