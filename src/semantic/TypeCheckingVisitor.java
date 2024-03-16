@@ -14,7 +14,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> implements 
         e.getLeft().accept(this, param);
         e.getRight().accept(this, param);
         if (!e.getLeft().getLvalue()) {
-            new ErrorType(e.getLine(), e.getColumn(), "No se puede realizar una asignación donde la parte izquierda no sea un lValue");
+            new ErrorType(e.getLine(), e.getColumn(), "No se puede realizar una asignación donde la parte izquierda no sea un lValue (" + e.getLeft().toString() + ")");
         }
         return null;
     }
@@ -23,7 +23,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> implements 
     public Void visit(Input e, Void param) {
         e.getInput().accept(this, param);
         if (!e.getInput().getLvalue()) {
-            new ErrorType(e.getLine(), e.getColumn(), "No se puede asignar un valor a algo que no sea un lValue");
+            new ErrorType(e.getLine(), e.getColumn(), "No se puede asignar un valor a algo que no sea un lValue (" + e.getInput().toString() + ")");
         }
         return null;
     }
