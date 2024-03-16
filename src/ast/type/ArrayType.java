@@ -33,4 +33,12 @@ public class ArrayType extends AbstractType implements Type {
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
         return visitor.visit(this, param);
     }
+
+    @Override
+    public String toString() {
+        return "ArrayType{" +
+                of.toString() +
+                "[" + size + "]" +
+                '}';
+    }
 }

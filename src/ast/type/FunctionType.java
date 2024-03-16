@@ -36,4 +36,13 @@ public class FunctionType extends AbstractType implements Type {
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
         return visitor.visit(this, param);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("FunctionType{ (");
+        params.forEach(varDef -> str.append(varDef.toString()).append(", "));
+        str.replace(str.length()-2, str.length(), ")");
+        str.append(" : ").append(returnType.toString()).append("}");
+        return str.toString();
+    }
 }
