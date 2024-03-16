@@ -1,6 +1,8 @@
 package semantic;
 
-import ast.expression.*;
+import ast.expression.ArrayAccess;
+import ast.expression.StructAccess;
+import ast.expression.Variable;
 import ast.statement.Assignment;
 import ast.statement.Input;
 import ast.type.ErrorType;
@@ -29,14 +31,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> implements 
     }
 
     @Override
-    public Void visit(Arithmetic e, Void param) {
-        e.setLvalue(false);
-        e.getLeft().accept(this, param);
-        e.getRight().accept(this, param);
-        return null;
-    }
-
-    @Override
     public Void visit(ArrayAccess e, Void param) {
         e.setLvalue(true);
         e.getLeft().accept(this, param);
@@ -45,64 +39,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> implements 
     }
 
     @Override
-    public Void visit(Cast e, Void param) {
-        e.setLvalue(false);
-        e.getType().accept(this, param);
-        e.getExpression().accept(this, param);
-        return null;
-    }
-
-    @Override
-    public Void visit(CharLiteral e, Void param) {
-        e.setLvalue(false);
-        return null;
-    }
-
-    @Override
-    public Void visit(Comparison e, Void param) {
-        e.setLvalue(false);
-        e.getLeft().accept(this, param);
-        e.getRight().accept(this, param);
-        return null;
-    }
-
-    @Override
-    public Void visit(DoubleLiteral e, Void param) {
-        e.setLvalue(false);
-        return null;
-    }
-
-    @Override
-    public Void visit(IntLiteral e, Void param) {
-        e.setLvalue(false);
-        return null;
-    }
-
-    @Override
-    public Void visit(Logical e, Void param) {
-        e.setLvalue(false);
-        e.getLeft().accept(this, param);
-        e.getRight().accept(this, param);
-        return null;
-    }
-
-    @Override
-    public Void visit(LogicalNot e, Void param) {
-        e.setLvalue(false);
-        e.getExpression().accept(this, param);
-        return null;
-    }
-
-    @Override
     public Void visit(StructAccess e, Void param) {
         e.setLvalue(true);
-        e.getExpression().accept(this, param);
-        return null;
-    }
-
-    @Override
-    public Void visit(UnaryMinus e, Void param) {
-        e.setLvalue(false);
         e.getExpression().accept(this, param);
         return null;
     }
