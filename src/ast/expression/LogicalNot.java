@@ -12,4 +12,11 @@ public class LogicalNot extends AbstractExpression1Param implements Expression {
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
         return visitor.visit(this, param);
     }
+
+    @Override
+    public String toString() {
+        return "LogicalNot{" +
+                "!" + getExpression().toString() +
+                "}";
+    }
 }
