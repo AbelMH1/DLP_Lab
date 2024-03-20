@@ -1,11 +1,12 @@
 package ast.expression;
 
+import ast.Definition;
 import ast.Expression;
 import visitor.Visitor;
 
 public class Variable extends AbstractExpression implements Expression {
     private String name;
-
+    private Definition varDef;
     public Variable(int line, int column, String name) {
         super(line, column);
         this.name = name;
@@ -17,6 +18,14 @@ public class Variable extends AbstractExpression implements Expression {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Definition getVarDef() {
+        return varDef;
+    }
+
+    public void setVarDef(Definition varDef) {
+        this.varDef = varDef;
     }
 
     @Override
