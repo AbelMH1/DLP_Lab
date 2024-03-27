@@ -2,12 +2,16 @@ integer:int;
 character:char;
 real, integer:double; # Error 1
 
+def integer(): {
+  hi:char;          # Error 2
+}
+
 def p(a:int): {
-  a:char;             # Error 2
+  a:char;             # Error 3
 }
 
 def main(): {
   character:double;
-  input integer, i;   # Error 3
-  f();                # Error 4
+  input integer, i;   # Error 4
+  f();                # Error 5
 }
