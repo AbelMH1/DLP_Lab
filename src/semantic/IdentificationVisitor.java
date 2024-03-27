@@ -7,11 +7,11 @@ import ast.expression.Variable;
 import ast.type.ErrorType;
 import symboltable.SymbolTable;
 import visitor.AbstractVisitor;
-import visitor.Visitor;
 
 public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 
-    private SymbolTable st;
+    private final SymbolTable st;
+
     public IdentificationVisitor() {
         st = new SymbolTable();
     }
@@ -19,7 +19,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(FunctionDefinition e, Void param) {
         if (!st.insert(e)) {
-            new ErrorType(e.getLine(), e.getColumn(), "Ya existe una definición con este nombre en el mismo ámbito (" + e.getName() + ")");
+            new ErrorType(e.getLine(), e.getColumn(), "\"" + e.getName() + "\" ya ha sido definido en el mismo ámbito");
         }
         st.set();
         e.getType().accept(this, param);
@@ -31,7 +31,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(VariableDefinition e, Void param) {
         if (!st.insert(e)) {
-            new ErrorType(e.getLine(), e.getColumn(), "Ya existe una definición con este nombre en el mismo ámbito (" + e.getName() + ")");
+            new ErrorType(e.getLine(), e.getColumn(), "\"" + e.getName() + "\" ya ha sido definido en el mismo ámbito");
         }
         e.getType().accept(this, param);
         return null;
@@ -39,8 +39,6 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(Variable e, Void param) {
-
-
         Definition def = st.find(e.getName());
         if (def == null) {
             new ErrorType(e.getLine(), e.getColumn(), "La variable \"" + e.getName() + "\" no está definida");
