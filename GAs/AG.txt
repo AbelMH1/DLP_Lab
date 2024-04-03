@@ -1,0 +1,42 @@
+(1) Program: program -> vardefinition* funcdefinition*
+
+// TIPOS
+(1) IntType: type → INT
+(1) DoubleType: type → DOUBLE
+(1) CharType: type → CHAR
+(1) VoidType: type →
+(1) ArrayType: type → type INT_CONSTANT
+(1) StructType: type → field*
+(1) RecordField: field → type ID
+(1) FunctionType: type → type vardefinition*
+
+// DEFINICIONES
+(1) VarDefinition: vardefinition → type ID
+(1) FuncDefinition: funcdefinition -> ID type vardefinition* statement*
+
+// SENTENCIAS
+(1) FunctionInvocation: statement -> expression1 expression2*
+(1) Print: statement -> expression*
+(1) Return: statement -> expression
+(1) Input: statement -> expression
+(1) While: statement -> expression
+(1) If: statement -> expression
+(1) Assignment: statement -> expression1 expression2
+
+// EXPRESIONES
+(1) FunctionInvocation: expression1 -> expression2 expression3*
+(3) Variable: expression → ID
+(4) IntLiteral: expression → INT_CONSTANT
+(4) DoubleLiteral: expression → REAL_CONSTANT
+(4) CharLiteral: expression → CHAR_CONSTANT
+(1) Arithmetic: expression1 → expression2 (+|-|*|/|%) expression3
+(1) Comparison: expression1 → expression2 (>|>=|<|<=|!=|==) expression3
+(1) Logical: expression1 → expression2 (&& | ||) expression3
+(2) ArrayAccess: expression1 → expression2 expression3
+(2) StructAccess: expression1 → ID expression2
+(2) LogicalNot: expression1 → expression2
+(2) UnaryMinus: expression1 → expression2
+(2) Cast: expression1 → expression2
+
+R
+
