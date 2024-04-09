@@ -43,8 +43,8 @@
 //_____________________________________________________________________________
 //                   A
 
-expression.type = Type
-statement.returnType = Type
+expression.type ∈ Type
+statement.returnType ∈ Type
 
 //_____________________________________________________________________________
 //                   R
@@ -67,16 +67,16 @@ statement.returnType = Type
 
 // SENTENCIAS
 (12) expression1.type = expression2.type.parenthesis(expression3*.map(expr -> expr.type))
-(13) expression*.forEach(expr -> expr.asBuiltInType())
-(14) expression.type.mustPromoteTo(statement.returnType) // promotesTo()
-(15)
+(13) expression*.forEach(expr -> expr.mustBeBuiltInType()) // asBuiltInType()
+(14) expression.type.mustPromoteTo(statement.returnType) // promotesTo(Type)
+(15) expression.type.mustBeBuiltInType() // asBuiltInType()
 (16) expression.type.mustBeLogical() // asLogical()
 (17) expression.type.mustBeLogical() // asLogical()
-(18) expression2.type.promotesTo(expression1.type)
+(18) expression2.type.mustPromoteTo(expression1.type) // promotesTo(Type)
 
 // EXPRESIONES
 (19) expression1.type = expression2.type.parenthesis(expression3*.map(expr -> expr.type))
-(20) expression.type = expression.definition.type
+(20) expression.type = expression.definition.type // El IdentificationVisitor ha pasado previamente
 (21) expression.type = new IntType()
 (22) expression.type = new DoubleType()
 (23) expression.type = new CharType()
@@ -85,6 +85,6 @@ statement.returnType = Type
 (26) expression1.type = expression2.type.logic(expression3.type)
 (27) expression1.type = expression2.type.squareBrackets(expression3.type)
 (28) expression1.type = expression2.type.dot(ID)
-(29) expression1.type = expression2.type.logic()
-(30) expression1.type = expression2.type.arithmetic()
+(29) expression1.type = expression2.type.logicalNot() // logic()
+(30) expression1.type = expression2.type.unaryMinus() // arithmetic()
 (31) expression1.type = expression2.type.canBeCastTo(type)
