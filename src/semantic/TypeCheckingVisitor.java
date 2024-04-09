@@ -7,9 +7,8 @@ import ast.statement.Assignment;
 import ast.statement.Input;
 import ast.type.ErrorType;
 import visitor.AbstractVisitor;
-import visitor.Visitor;
 
-public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> implements Visitor<Void, Void> {
+public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(Assignment e, Void param) {
