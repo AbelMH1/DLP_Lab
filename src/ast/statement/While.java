@@ -6,7 +6,7 @@ import visitor.Visitor;
 
 import java.util.List;
 
-public class While extends AbstractStatement implements Statement {
+public class While extends AbstractStatement {
     private Expression condition;
     private List<Statement> body;
 

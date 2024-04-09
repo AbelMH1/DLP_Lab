@@ -1,9 +1,8 @@
 package ast.type;
 
-import ast.Type;
 import visitor.Visitor;
 
-public class CharType extends AbstractType implements Type {
+public class CharType extends AbstractType {
     private static CharType instance;
 
     private CharType() {

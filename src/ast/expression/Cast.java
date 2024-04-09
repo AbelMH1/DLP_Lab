@@ -4,7 +4,7 @@ import ast.Expression;
 import ast.Type;
 import visitor.Visitor;
 
-public class Cast extends AbstractExpression1Param implements Expression {
+public class Cast extends AbstractExpression1Param {
     private Type type;
 
     public Cast(int line, int column, Expression expression, Type type) {

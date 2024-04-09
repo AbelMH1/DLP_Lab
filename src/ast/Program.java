@@ -4,7 +4,7 @@ import visitor.Visitor;
 
 import java.util.List;
 
-public class Program extends AbstractASTNode implements ASTNode {
+public class Program extends AbstractASTNode {
     private List<Definition> body;
 
     public Program(int line, int column, List<Definition> body) {

@@ -6,7 +6,7 @@ import visitor.Visitor;
 
 import java.util.List;
 
-public class If extends AbstractStatement implements Statement {
+public class If extends AbstractStatement {
     private Expression condition;
     private List<Statement> ifPart;
     private List<Statement> elsePart;

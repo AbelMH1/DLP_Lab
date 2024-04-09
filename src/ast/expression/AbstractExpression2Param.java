@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.Expression;
 
-public abstract class AbstractExpression2Param extends AbstractExpression implements Expression {
+public abstract class AbstractExpression2Param extends AbstractExpression {
     private String operator;
     private Expression left;
     private Expression right;

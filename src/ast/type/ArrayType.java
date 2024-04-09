@@ -3,7 +3,7 @@ package ast.type;
 import ast.Type;
 import visitor.Visitor;
 
-public class ArrayType extends AbstractType implements Type {
+public class ArrayType extends AbstractType {
     private int size;
     private Type of;
 

@@ -1,10 +1,9 @@
 package ast.expression;
 
 import ast.Definition;
-import ast.Expression;
 import visitor.Visitor;
 
-public class Variable extends AbstractExpression implements Expression {
+public class Variable extends AbstractExpression {
     private String name;
     private Definition varDef;
     public Variable(int line, int column, String name) {

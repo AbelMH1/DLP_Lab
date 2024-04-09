@@ -1,9 +1,8 @@
 package ast.expression;
 
-import ast.Expression;
 import visitor.Visitor;
 
-public class CharLiteral extends AbstractExpression implements Expression {
+public class CharLiteral extends AbstractExpression {
     private char value;
 
     public CharLiteral(int line, int column, char value) {

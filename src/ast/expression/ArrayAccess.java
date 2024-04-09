@@ -3,7 +3,7 @@ package ast.expression;
 import ast.Expression;
 import visitor.Visitor;
 
-public class ArrayAccess extends AbstractExpression implements Expression {
+public class ArrayAccess extends AbstractExpression {
     private Expression left;
     private Expression access;
 

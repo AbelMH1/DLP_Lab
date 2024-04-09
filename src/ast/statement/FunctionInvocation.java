@@ -8,7 +8,7 @@ import visitor.Visitor;
 
 import java.util.List;
 
-public class FunctionInvocation extends AbstractExpression implements Expression, Statement {
+public class FunctionInvocation extends AbstractExpression implements Statement {
     private Variable name;
     private List<Expression> parameters;
 

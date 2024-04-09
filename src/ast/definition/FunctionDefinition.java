@@ -1,13 +1,12 @@
 package ast.definition;
 
-import ast.Definition;
 import ast.Statement;
 import ast.Type;
 import visitor.Visitor;
 
 import java.util.List;
 
-public class FunctionDefinition extends AbstractDefinition implements Definition {
+public class FunctionDefinition extends AbstractDefinition {
     private List<Statement> body;
 
     public FunctionDefinition(int line, int column, Type type, String name, List<Statement> body) {

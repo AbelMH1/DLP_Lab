@@ -1,10 +1,9 @@
 package ast.statement;
 
 import ast.Expression;
-import ast.Statement;
 import visitor.Visitor;
 
-public class Return extends AbstractStatement implements Statement {
+public class Return extends AbstractStatement {
     private Expression expression;
 
     public Return(int line, int column, Expression expression) {

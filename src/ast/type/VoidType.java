@@ -1,9 +1,8 @@
 package ast.type;
 
-import ast.Type;
 import visitor.Visitor;
 
-public class VoidType extends AbstractType implements Type {
+public class VoidType extends AbstractType {
     private static VoidType instance;
 
     private VoidType() {

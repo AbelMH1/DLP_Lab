@@ -1,10 +1,9 @@
 package ast.type;
 
-import ast.Type;
 import errorhandler.ErrorHandler;
 import visitor.Visitor;
 
-public class ErrorType extends AbstractType implements Type {
+public class ErrorType extends AbstractType {
     private String message;
 
     public ErrorType(int line, int column, String message) {
@@ -15,9 +14,7 @@ public class ErrorType extends AbstractType implements Type {
 
     @Override
     public String toString() {
-        return "Error en la línea " + getLine() +
-                ", columna " + getColumn() + ": " +
-                message;
+        return "Error en la línea " + getLine() + ", columna " + getColumn() + ": " + message;
     }
 
     @Override

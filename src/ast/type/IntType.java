@@ -1,9 +1,8 @@
 package ast.type;
 
-import ast.Type;
 import visitor.Visitor;
 
-public class IntType extends AbstractType implements Type {
+public class IntType extends AbstractType {
     private static IntType instance;
 
     private IntType() {

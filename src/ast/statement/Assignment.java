@@ -1,10 +1,9 @@
 package ast.statement;
 
 import ast.Expression;
-import ast.Statement;
 import visitor.Visitor;
 
-public class Assignment extends AbstractStatement implements Statement {
+public class Assignment extends AbstractStatement {
     private Expression left;
     private Expression right;
 

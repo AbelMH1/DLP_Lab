@@ -2,7 +2,7 @@ package ast;
 
 import visitor.Visitor;
 
-public class RecordField extends AbstractASTNode implements ASTNode {
+public class RecordField extends AbstractASTNode {
     private String name;
     private Type type;
 

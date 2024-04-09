@@ -1,12 +1,11 @@
 package ast.type;
 
 import ast.RecordField;
-import ast.Type;
 import visitor.Visitor;
 
 import java.util.List;
 
-public class StructType extends AbstractType implements Type {
+public class StructType extends AbstractType {
     private List<RecordField> fields;
 
     public StructType(List<RecordField> fields) {

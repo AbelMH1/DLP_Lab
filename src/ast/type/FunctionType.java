@@ -6,7 +6,7 @@ import visitor.Visitor;
 
 import java.util.List;
 
-public class FunctionType extends AbstractType implements Type {
+public class FunctionType extends AbstractType {
     private Type returnType;
     private List<VariableDefinition> params;
 

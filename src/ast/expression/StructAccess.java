@@ -3,7 +3,7 @@ package ast.expression;
 import ast.Expression;
 import visitor.Visitor;
 
-public class StructAccess extends AbstractExpression1Param implements Expression {
+public class StructAccess extends AbstractExpression1Param {
     private String field;
 
     public StructAccess(int line, int column, Expression left, String field) {

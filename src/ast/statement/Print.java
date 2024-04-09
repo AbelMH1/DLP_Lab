@@ -1,12 +1,11 @@
 package ast.statement;
 
 import ast.Expression;
-import ast.Statement;
 import visitor.Visitor;
 
 import java.util.List;
 
-public class Print extends AbstractStatement implements Statement {
+public class Print extends AbstractStatement {
     private List<Expression> parameters;
 
     public Print(int line, int column, List<Expression> parameters) {
