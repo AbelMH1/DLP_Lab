@@ -5,7 +5,7 @@ real:double;
 def main(): {
   input integer; 
   character = 8.5;	# Error 1
-  3 = integer;		# Error 2
-  input integer+2; 	# Error 3
+  3 = integer;		# Error 2 (Ya detectado con lvalues)
+  input integer+2; 	# Error 3 (Ya detectado con lvalues)
 }
 

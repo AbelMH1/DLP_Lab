@@ -1,7 +1,7 @@
 date: struct  { 
   day:int;
   month:int;
-  day:double;		# Error 1
+  day:double;		# Error 1 (Ya detectado en sintáctico)
 };
 
 def main(): {

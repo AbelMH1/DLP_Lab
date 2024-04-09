@@ -2,15 +2,15 @@
 i:int;
 
 def f(a:int):int {
-  a:double;						# Error 1
+  a:double;						# Error 1 (Ya detectado con definitions)
   return 34.5;					# Error 2
 }
 
-def g(b:int, b:double): {		# Error 3
+def g(b:int, b:double): {		# Error 3 (Ya detectado con definitions)
   return 3;						# Error 4
 }
 
-def g(): {						# Error 5
+def g(): {						# Error 5 (Ya detectado con definitions)
 }
 
 def main(): {
