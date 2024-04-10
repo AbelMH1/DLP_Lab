@@ -1,0 +1,110 @@
+//                   P
+
+(1) Program: program -> vardefinition* funcdefinition*
+
+// TIPOS
+(2) IntType: type → INT
+(3) DoubleType: type → DOUBLE
+(4) CharType: type → CHAR
+(5) VoidType: type →
+(6) ArrayType: type → type INT_CONSTANT
+(7) StructType: type → field*
+(8) RecordField: field → type ID
+(9) FunctionType: type → type vardefinition*
+
+// DEFINICIONES
+(10) VarDefinition: vardefinition → type ID
+(11) FuncDefinition: funcdefinition -> ID type vardefinition* statement*
+
+// SENTENCIAS
+(12) FunctionInvocation: statement -> expression1 expression2*
+(13) Print: statement -> expression*
+(14) Return: statement -> expression
+(15) Input: statement -> expression
+(16) While: statement1 -> expression statement2*
+(17) If: statement1 -> expression statement2* statement3*
+(18) Assignment: statement -> expression1 expression2
+
+// EXPRESIONES
+(19) FunctionInvocation: expression1 -> expression2 expression3*
+(20) Variable: expression → ID
+(21) IntLiteral: expression → INT_CONSTANT
+(22) DoubleLiteral: expression → REAL_CONSTANT
+(23) CharLiteral: expression → CHAR_CONSTANT
+(24) Arithmetic: expression1 → expression2 (+|-|*|/|%) expression3
+(25) Comparison: expression1 → expression2 (>|>=|<|<=|!=|==) expression3
+(26) Logical: expression1 → expression2 (&& | ||) expression3
+(27) ArrayAccess: expression1 → expression2 expression3
+(28) StructAccess: expression1 → expression2 ID
+(29) LogicalNot: expression1 → expression2
+(30) UnaryMinus: expression1 → expression2
+(31) Cast: expression1 → type expression2
+
+//_____________________________________________________________________________
+//                   A
+
+vardefinition.offset ∈ INT
+field.offset ∈ INT
+
+type.numberOfBytes // Esto es pa la implementación no pa aquí.
+
+//_____________________________________________________________________________
+//                   R
+
+(1) totalOffset = 0;
+    for (VarDefinition varDef: vardefinition*) {
+        varDef.offset = totalOffset;
+        totalOffset += varDef.type.numberOfBytes;
+    }
+
+// TIPOS
+(2)
+(3)
+(4)
+(5)
+(6)
+(7) totalOffset = 0;
+    for (RecordField field: field*) {
+        field.offset = totalOffset;
+        totalOffset += field.type.numberOfBytes;
+    }
+(8)
+(9) totalOffset = 4;
+    for (int i = vardefinition*.size(); i >= 0; i--) {
+        VarDefinition varDef = vardefinition*.get(i);
+        varDef.offset = totalOffset;
+        totalOffset += varDef.type.numberOfBytes;
+    }
+
+
+// DEFINICIONES
+(10)
+(11)    totalOffset = 0;
+        for (VarDefinition varDef: vardefinition*) {
+            totalOffset += varDef.type.numberOfBytes;
+            varDef.offset = -totalOffset;
+        }
+
+// SENTENCIAS
+(12)
+(13)
+(14)
+(15)
+(16)
+(17)
+(18)
+
+// EXPRESIONES
+(19)
+(20)
+(21)
+(22)
+(23)
+(24)
+(25)
+(26)
+(27)
+(28)
+(29)
+(30)
+(31)
