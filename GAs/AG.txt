@@ -67,7 +67,7 @@ statement.returnType ∈ Type
 
 // SENTENCIAS
 (12) expression1.type = expression2.type.parenthesis(expression3*.map(expr -> expr.type))
-(13) expression*.forEach(expr -> expr.mustBeBuiltInType()) // asBuiltInType()
+(13) expression*.forEach(expr -> expr.type.mustBeBuiltInType()) // asBuiltInType()
 (14) expression.type.mustPromoteTo(statement.returnType) // promotesTo(Type)
 (15) expression.type.mustBeBuiltInType() // asBuiltInType()
 (16) expression.type.mustBeLogical() // asLogical()
