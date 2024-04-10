@@ -1,25 +1,5 @@
-Implementar la pasada de comprobación de tipos de la fase de análisis semántico.
-Decorar el AST con la información de tipos.
-Detectar los errores de los 5 programas de prueba.
-
-Cómo hacerlo:
-añadir getType y set Type en expressiones
-A los literales su tipo directamente
-A las variables se saca de su definición
-En los if y while comprobar que la condición sea de tipo entero: se añade un método booleano a los tipos (asLogical():Type) que devuelve error si no sirve
-Añadimos también a los tipos metodo arithmetic(Type,ASTNode):Type (char + char, int+int, double + double), resto: error; TEORIA TRANSPARENCIA 86
-Pal operador menos unario, arithmetic(ASTNode):Type
-TODOS LOS METODOS RECIBEN ASTNODE para obtener información si da error.
-Añadimos también a los tipos metodo comparison(Type,ASTNode):Type (char + char, int+int, double + double), resto: error; TEORIA TRANSPARENCIA 89
-Añadimos también a los tipos metodo logic(Type,ASTNode):Type
-Añadimos también a los tipos metodo logic(ASTNode):Type
-Añadimos también a los tipos metodo promotesTo(Type,ASTNode):Type (double, entero y char devuelve el mismo tipo si son iguales al q recibe, sino, error
-
-Añadimos también a los tipos metodo asBuiltInType(ASTNode):Type (double, entero y char devuelve el mismo tipo si son iguales al q recibe, sino, error
-canBeCastTo(Type,ASTNode):Type
-squareBrackets(Type,ASTNode):Type
-dot(String,ASTNode):Type
-parenthesis(List<Type>,ASTNode):Type  para el tipo función
-
-TAREA 1:
-Definir una AG.txt para la gramática atribuida usada para realizar toda la comprobación de tipos
+Annotate the AST with the offsets of:
+- Global variables
+- Local variables
+- (Formal) parameters
+- Record fields
