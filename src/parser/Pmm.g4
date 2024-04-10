@@ -61,7 +61,7 @@ type returns [Type ast] locals[List<VariableDefinition> recordFields = new Array
         HashSet<String> e = new HashSet<>();
         for(VariableDefinition var : $recordFields) {
             if(e.contains(var.getName())){
-                list.add(new RecordField(var.getLine(), var.getColumn(), var.getName(), new ErrorType(var.getLine(), var.getColumn(), "No se pueden definir dos campos con el mismo nombre dentro de un struct")));
+                list.add(new RecordField(var.getLine(), var.getColumn(), var.getName(), new ErrorType(var.getLine(), var.getColumn(), "No se pueden definir dos campos con el mismo nombre dentro de un struct (" + var.getName() + ")")));
             }
             else {
                 e.add(var.getName());
