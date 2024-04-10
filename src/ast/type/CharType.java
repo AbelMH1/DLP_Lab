@@ -32,7 +32,7 @@ public class CharType extends AbstractType {
 
     @Override
     public Type arithmetic(ASTNode ast) {
-        return IntType.getInstance(); // TODO: Se permiten operaciones?
+        return IntType.getInstance();
     }
 
     @Override
@@ -43,13 +43,13 @@ public class CharType extends AbstractType {
 
     @Override
     public Type canBeCastTo(Type other, ASTNode ast) {
-        if (other == this || other instanceof IntType || other instanceof ErrorType) return other; // TODO: Se permiten operaciones? Cast a sí mismo o a entero?
+        if (other == this || other instanceof IntType || other instanceof ErrorType) return other; // TODO: Todos los tipos básicos se pueden castear a todos los tipos básicos
         return new ErrorType(ast.getLine(), ast.getColumn(), "No se puede realizar la conversión a \"" + other.toString() + "\"");
     }
 
     @Override
     public Type promotesTo(Type other, ASTNode ast) {
-        if (other == this || other instanceof ErrorType) return other; // TODO: Esto es asi?
+        if (other == this || other instanceof ErrorType) return other;
         return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this + "\" no promociona a \"" + other.toString() + "\"");
     }
 

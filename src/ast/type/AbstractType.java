@@ -68,7 +68,6 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type parenthesis(List<Type> others, ASTNode ast) {
-        // TODO: Hacer algo con other? No se
         return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden invocar un \"" + this + "\"");
     }
 

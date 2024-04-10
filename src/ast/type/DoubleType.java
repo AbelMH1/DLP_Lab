@@ -31,7 +31,7 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type arithmetic(ASTNode ast) {
-        return this; // TODO: Esto está bien?
+        return this;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type promotesTo(Type other, ASTNode ast) {
-        if (other == this || other instanceof ErrorType) return other; // TODO: Esto es asi?
+        if (other == this || other instanceof ErrorType) return other;
         return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this + "\" no promociona a \"" + other.toString() + "\"");
     }
 
