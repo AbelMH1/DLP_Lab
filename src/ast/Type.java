@@ -15,7 +15,8 @@ public interface Type extends ASTNode {
     Type canBeCastTo(Type other,ASTNode ast); // Para conversiones de tipos (Cast)
     Type parenthesis(List<Type> others, ASTNode ast); // Para invocación a función
     Type promotesTo(Type other,ASTNode ast); // Para promociones implícitas de tipos (solo los básicos promocionan a sí mismos, nada más)
+    boolean canPromoteTo(Type other); // Para promociones implícitas de tipos (solo los básicos promocionan a sí mismos, nada más), pero sin generar errores
     Type asBuiltInType(ASTNode ast); // Para los tipos básicos (Int, Double, Char)
-    boolean isBuiltInType(); // Para los tipos básicos (Int, Double, Char)
+    boolean isBuiltInType(); // Para los tipos básicos (Int, Double, Char), pero sin generar errores
     Type asLogical(ASTNode ast); // Para los tipos básicos (Int, Double, Char)
 }

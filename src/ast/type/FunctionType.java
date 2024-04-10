@@ -44,7 +44,7 @@ public class FunctionType extends AbstractType {
             return new ErrorType(ast.getLine(), ast.getColumn(), "La función esperaba \"" + params.size() + "\" parámetros, se recibieron \"" + others.size() + "\"");
         }
         for (int i = 0; i < params.size(); i++){
-            if (others.get(i).promotesTo(params.get(i).getType(), ast) instanceof ErrorType){
+            if (!others.get(i).canPromoteTo(params.get(i).getType())){
                 return new ErrorType(ast.getLine(), ast.getColumn(), "La función esperaba un \"" + params.get(i).getType() + "\" en el parámetro \"" + i + "\", se recibió un \"" + others.get(i).toString() + "\"");
             }
         }

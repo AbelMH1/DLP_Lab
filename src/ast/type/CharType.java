@@ -59,6 +59,11 @@ public class CharType extends AbstractType {
     }
 
     @Override
+    public boolean canPromoteTo(Type other) {
+        return other == this;
+    }
+
+    @Override
     public Type asBuiltInType(ASTNode ast) {
         return this;
     }

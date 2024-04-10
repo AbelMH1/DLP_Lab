@@ -85,6 +85,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
+    public boolean canPromoteTo(Type other) {
+        return false;
+    }
+
+    @Override
     public Type asBuiltInType(ASTNode ast) {
         return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this +  "\" no es un tipo primitivo");
     }
