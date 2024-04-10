@@ -31,6 +31,11 @@ public class ArrayType extends AbstractType {
     }
 
     @Override
+    public int numberOfBytes() {
+        return size * of.numberOfBytes();
+    }
+
+    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
         return visitor.visit(this, param);
     }
@@ -43,9 +48,6 @@ public class ArrayType extends AbstractType {
 
     @Override
     public String toString() {
-        return "ArrayType{" +
-                of.toString() +
-                "[" + size + "]" +
-                '}';
+        return "ArrayType{" + of.toString() + "[" + size + "]" + '}';
     }
 }

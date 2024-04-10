@@ -6,6 +6,7 @@ import ast.Type;
 import visitor.Visitor;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StructType extends AbstractType {
     private List<RecordField> fields;
@@ -21,6 +22,15 @@ public class StructType extends AbstractType {
 
     public void setFields(List<RecordField> fields) {
         this.fields = fields;
+    }
+
+    @Override
+    public int numberOfBytes() {
+        int totalNumberOfBytes = 0;
+        for (RecordField rf : fields) {
+            totalNumberOfBytes += rf.getType().numberOfBytes();
+        }
+        return totalNumberOfBytes;
     }
 
     @Override

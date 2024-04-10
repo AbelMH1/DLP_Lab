@@ -12,6 +12,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
+    public int numberOfBytes() {
+        throw new IllegalStateException();
+    }
+
+    @Override
     public Type arithmetic(Type other, ASTNode ast) {
         if(other instanceof ErrorType){
             return other;

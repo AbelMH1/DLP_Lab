@@ -3,6 +3,8 @@ package ast;
 import java.util.List;
 
 public interface Type extends ASTNode {
+    int numberOfBytes();
+
     Type arithmetic(Type other,ASTNode ast); // Para operaciones aritméticas
     Type arithmetic(ASTNode ast); // Para operaciones aritméticas unarias (el Minus)
     Type comparison(Type other,ASTNode ast); // Para los 6 operadores de comparación (>, <, >=, <=, == y !=)
@@ -12,7 +14,7 @@ public interface Type extends ASTNode {
     Type dot(String field,ASTNode ast); // Para expresiones de acceso a campo (records/ structs)
     Type canBeCastTo(Type other,ASTNode ast); // Para conversiones de tipos (Cast)
     Type parenthesis(List<Type> others, ASTNode ast); // Para invocación a función
-    Type promotesTo(Type other,ASTNode ast);
+    Type promotesTo(Type other,ASTNode ast); // Para promociones implícitas de tipos (solo los básicos promocionan a sí mismos, nada más)
     Type asBuiltInType(ASTNode ast); // Para los tipos básicos (Int, Double, Char)
     Type asLogical(ASTNode ast); // Para los tipos básicos (Int, Double, Char)
 }
