@@ -16,5 +16,6 @@ public interface Type extends ASTNode {
     Type parenthesis(List<Type> others, ASTNode ast); // Para invocación a función
     Type promotesTo(Type other,ASTNode ast); // Para promociones implícitas de tipos (solo los básicos promocionan a sí mismos, nada más)
     Type asBuiltInType(ASTNode ast); // Para los tipos básicos (Int, Double, Char)
+    boolean isBuiltInType(); // Para los tipos básicos (Int, Double, Char)
     Type asLogical(ASTNode ast); // Para los tipos básicos (Int, Double, Char)
 }

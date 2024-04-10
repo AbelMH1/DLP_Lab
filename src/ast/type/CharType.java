@@ -48,8 +48,8 @@ public class CharType extends AbstractType {
 
     @Override
     public Type canBeCastTo(Type other, ASTNode ast) {
-        if (other == this || other instanceof IntType || other instanceof ErrorType) return other; // TODO: Todos los tipos básicos se pueden castear a todos los tipos básicos
-        return new ErrorType(ast.getLine(), ast.getColumn(), "No se puede realizar la conversión a \"" + other.toString() + "\"");
+        if (other.isBuiltInType()) return other;
+        return super.canBeCastTo(other, ast);
     }
 
     @Override
@@ -61,6 +61,11 @@ public class CharType extends AbstractType {
     @Override
     public Type asBuiltInType(ASTNode ast) {
         return this;
+    }
+
+    @Override
+    public boolean isBuiltInType() {
+        return true;
     }
 
     @Override

@@ -90,6 +90,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
+    public boolean isBuiltInType() {
+        return false;
+    }
+
+    @Override
     public Type asLogical(ASTNode ast) {
         return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this +  "\" no es un tipo lógico");
     }
