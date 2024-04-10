@@ -5,19 +5,19 @@ import ast.Type;
 import visitor.Visitor;
 
 public class Cast extends AbstractExpression1Param {
-    private Type type;
+    private Type castType;
 
-    public Cast(int line, int column, Expression expression, Type type) {
+    public Cast(int line, int column, Expression expression, Type castType) {
         super(line, column, expression);
-        this.type = type;
+        this.castType = castType;
     }
 
-    public Type getType() {
-        return type;
+    public Type getCastType() {
+        return castType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setCastType(Type castType) {
+        this.castType = castType;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Cast extends AbstractExpression1Param {
     @Override
     public String toString() {
         return "Cast{" +
-                "(" + type.toString() + ")" +
+                "(" + castType.toString() + ")" +
                 getExpression().toString() +
                 '}';
     }
