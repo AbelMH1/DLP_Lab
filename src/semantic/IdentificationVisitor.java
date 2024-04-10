@@ -41,10 +41,10 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(Variable e, Void param) {
         Definition def = st.find(e.getName());
         if (def == null) {
-            new ErrorType(e.getLine(), e.getColumn(), "La variable \"" + e.getName() + "\" no está definida");
-        } else {
-            e.setVarDef(def);
+            ErrorType error = new ErrorType(e.getLine(), e.getColumn(), "La variable \"" + e.getName() + "\" no está definida");
+            def = new VariableDefinition(-1, -1, error, e.getName());
         }
+        e.setVarDef(def);
         return null;
     }
 }
