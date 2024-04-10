@@ -30,8 +30,8 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type arithmetic(Type other, ASTNode ast) {
-        if (other == this || other instanceof ErrorType) return other;
-        return new ErrorType(ast.getLine(), ast.getColumn(), "No se puede realizar la operación con \"" + other.toString() + "\"");
+        if (other == this) return other;
+        return super.arithmetic(other, ast);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type comparison(Type other, ASTNode ast) {
-        if (other == this || other instanceof ErrorType) return other;
-        return new ErrorType(ast.getLine(), ast.getColumn(), "No se puede realizar la comparación con \"" + other.toString() + "\"");
+        if (other == this) return other;
+        return super.comparison(other, ast);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type promotesTo(Type other, ASTNode ast) {
-        if (other == this || other instanceof ErrorType) return other;
-        return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this + "\" no promociona a \"" + other.toString() + "\"");
+        if (other == this) return other;
+        return super.promotesTo(other, ast);
     }
 
     @Override

@@ -18,9 +18,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type arithmetic(Type other, ASTNode ast) {
-        if(other instanceof ErrorType){
-            return other;
-        }
+        if (other instanceof ErrorType) return other;
         return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden realizar operaciones aritmétricas entre \"" + this + "\" y \"" + other.toString() + "\"");
     }
 
@@ -31,17 +29,13 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type comparison(Type other, ASTNode ast) {
-        if(other instanceof ErrorType){
-            return other;
-        }
-        return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden realizar operaciones comparativas entre \"" + this + "\" y \"" + other.toString() + "\"");
+        if (other instanceof ErrorType) return other;
+        return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden realizar operaciones de comparación entre \"" + this + "\" y \"" + other.toString() + "\"");
     }
 
     @Override
     public Type logic(Type other, ASTNode ast) {
-        if(other instanceof ErrorType){
-            return other;
-        }
+        if (other instanceof ErrorType) return other;
         return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden realizar operaciones lógicas entre \"" + this + "\" y \"" + other.toString() + "\"");
     }
 
@@ -52,9 +46,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type squareBrackets(Type other, ASTNode ast) {
-        if(other instanceof ErrorType){
-            return other;
-        }
+        if (other instanceof ErrorType) return other;
         return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden realizar operaciones de indexado en \"" + this + "\"");
     }
 
@@ -65,10 +57,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type canBeCastTo(Type other, ASTNode ast) {
-        if(other instanceof ErrorType){
-            return other;
-        }
-        return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden realizar operaciones de conversión de tipos con \"" + this + "\"");
+        if (other instanceof ErrorType) return other;
+        return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden realizar operaciones de conversión de tipos de \"" + this + "\" a \"" + other.toString() + "\"");
     }
 
     @Override
@@ -78,10 +68,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type promotesTo(Type other, ASTNode ast) {
-        if(other instanceof ErrorType){
-            return other;
-        }
-        return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this +  "\" no puede promocionar a ningún tipo");
+        if (other instanceof ErrorType) return other;
+        return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this + "\" no promociona a \"" + other.toString() + "\"");
     }
 
     @Override
@@ -91,7 +79,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type asBuiltInType(ASTNode ast) {
-        return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this +  "\" no es un tipo primitivo");
+        return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this + "\" no es un tipo primitivo");
     }
 
     @Override
@@ -101,6 +89,6 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type asLogical(ASTNode ast) {
-        return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this +  "\" no es un tipo lógico");
+        return new ErrorType(ast.getLine(), ast.getColumn(), "El tipo \"" + this + "\" no es un tipo lógico");
     }
 }

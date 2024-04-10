@@ -43,7 +43,7 @@ public class ArrayType extends AbstractType {
     @Override
     public Type squareBrackets(Type other, ASTNode ast) {
         if (other instanceof IntType) return of;
-        return new ErrorType(ast.getLine(), ast.getColumn(), "Se esperaba un entero en el índice");
+        return new ErrorType(ast.getLine(), ast.getColumn(), "Se esperaba un entero en el índice, se recibió un \"" + other.toString() + "\"");
     }
 
     @Override
