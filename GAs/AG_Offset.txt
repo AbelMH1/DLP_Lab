@@ -70,7 +70,7 @@ type.numberOfBytes // Esto es pa la implementación no pa aquí.
     }
 (8)
 (9) totalOffset = 4;
-    for (int i = vardefinition*.size(); i >= 0; i--) {
+    for (int i = vardefinition*.size()-1; i >= 0; i--) {
         VarDefinition varDef = vardefinition*.get(i);
         varDef.offset = totalOffset;
         totalOffset += varDef.type.numberOfBytes;
