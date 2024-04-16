@@ -6,6 +6,7 @@ import ast.ASTNode;
 import errorhandler.ErrorHandler;
 import introspector.view.IntrospectorView;
 import parser.*;
+import semantic.HasReturnVisitor;
 import semantic.IdentificationVisitor;
 import semantic.TypeCheckingVisitor;
 
@@ -27,6 +28,7 @@ public class Main {
 		ASTNode ast = parser.program().ast;
 
 		ast.accept(new IdentificationVisitor(), null);
+		ast.accept(new HasReturnVisitor(), null);
 		ast.accept(new TypeCheckingVisitor(),null);
 
 		// * Check errors
