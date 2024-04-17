@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface Type extends ASTNode {
     int numberOfBytes();
+    char suffix();
 
     Type arithmetic(Type other,ASTNode ast); // Para operaciones aritméticas
     Type arithmetic(ASTNode ast); // Para operaciones aritméticas unarias (el Minus)

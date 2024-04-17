@@ -13,7 +13,12 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public int numberOfBytes() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("El tipo \"" + this + "\" no tiene numberOfBytes");
+    }
+
+    @Override
+    public char suffix() {
+        throw new IllegalStateException("El tipo \"" + this + "\" no tiene sufijo");
     }
 
     @Override
