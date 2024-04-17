@@ -1,6 +1,7 @@
 package codegenerator;
 
 import ast.Type;
+import ast.type.IntType;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -8,13 +9,25 @@ import java.io.PrintWriter;
 public class CodeGenerator {
 
     PrintWriter out;
+    int labelCounter;
 
     public CodeGenerator(String inputFilename, String outputFilename) {
         try {
             this.out = new PrintWriter(outputFilename);
+            this.labelCounter = 0;
         } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
+    }
+
+    public String getNextLabel(){
+        this.labelCounter++;
+        return "label" + this.labelCounter;
+    }
+
+    public void commentOL(String comment) {
+        out.println("' " + comment);
+        out.flush();
     }
 
     public void push(int value) {
@@ -143,13 +156,18 @@ public class CodeGenerator {
     }
 
     public void conversion(Type type1, Type type2) {
-        if (type1)
-        out.println("i2b");
+        if (type1.canPromoteTo(type2)) return;
+        if (type1 instanceof IntType || type2 instanceof IntType) {
+            out.println(type1.suffix() + "2" + type2.suffix());
+        } else {
+            out.println(type1.suffix() + "2i");
+            out.println("i2" + type2.suffix());
+        }
         out.flush();
     }
 
-    public void label(String label) {
-        out.println(label + ":");
+    public void label(String id) {
+        out.println(id + ":");
         out.flush();
     }
 
@@ -165,6 +183,26 @@ public class CodeGenerator {
 
     public void jnz(String label) {
         out.println("jnz " + label);
+        out.flush();
+    }
+
+    public void call(String id) {
+        out.println("call " + id);
+        out.flush();
+    }
+
+    public void enter(int int_constant) {
+        out.println("enter " + int_constant);
+        out.flush();
+    }
+
+    public void ret(int bytesToReturn, int bytesLocalVariables, int bytesArguments) {
+        out.println("ret " + bytesToReturn + ", " + bytesLocalVariables + ", " + bytesArguments);
+        out.flush();
+    }
+
+    public void halt(int int_constant) {
+        out.println("halt");
         out.flush();
     }
 
