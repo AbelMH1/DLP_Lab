@@ -36,7 +36,7 @@ public class CodeGenerator {
     }
 
     public void push(char value) {
-        out.println("pushb " + value);
+        out.println("pushb " + (int)value);
         out.flush();
     }
 
@@ -155,7 +155,7 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public void conversion(Type type1, Type type2) {
+    public void convert(Type type1, Type type2) {
         if (type1.canPromoteTo(type2)) return;
         if (type1 instanceof IntType || type2 instanceof IntType) {
             out.println(type1.suffix() + "2" + type2.suffix());
@@ -201,9 +201,37 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public void halt(int int_constant) {
+    public void halt() {
         out.println("halt");
         out.flush();
+    }
+
+    public void arithmetic(String operator, Type type) {
+        switch (operator) {
+            case "+": add(type); break;
+            case "-": sub(type); break;
+            case "*": div(type); break;
+            case "/": mul(type); break;
+            case "%": mod(type); break;
+        }
+    }
+
+    public void comparison(String operator, Type type) {
+        switch (operator) {
+            case ">": gt(type); break;
+            case ">=": ge(type); break;
+            case "<": lt(type); break;
+            case "<=": le(type); break;
+            case "!=": ne(type); break;
+            case "==": eq(type); break;
+        }
+    }
+
+    public void logical(String operator) {
+        switch (operator) {
+            case "&&": and(); break;
+            case "||": or(); break;
+        }
     }
 
 }
