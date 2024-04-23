@@ -59,9 +59,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      *      int bytesParams = type.parameters.stream().mapToInt(
      *                          param -> param.type.numberOfBytes()).sum();
      *      int bytesReturn = type.returnType.numberOfBytes();
-     *      statement*.forEach(stmt -> execute[[stmt]])
+     *
+     *      statement*.forEach(stmt -> execute[[stmt]](bytesLocals, bytesParams, bytesReturn))
      *      if (bytesReturn==0) // sin sentencia return
-     *          ret bytesReturn , bytesLocals , bytesParams
+     *          <ret > bytesReturn < , > bytesLocals < , > bytesParams
      */
     @Override
     public Void visit(FunctionDefinition e, Void param) {
