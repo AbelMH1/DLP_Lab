@@ -11,7 +11,7 @@ public class CodeGenerator {
     PrintWriter out;
     int labelCounter;
 
-    public CodeGenerator(String inputFilename, String outputFilename) {
+    public CodeGenerator(String outputFilename, String inputFilename) {
         try {
             this.out = new PrintWriter(outputFilename);
             this.labelCounter = 0;
