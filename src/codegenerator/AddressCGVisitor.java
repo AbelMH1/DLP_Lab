@@ -1,8 +1,11 @@
 package codegenerator;
 
+import ast.definition.VariableDefinition;
 import ast.expression.ArrayAccess;
 import ast.expression.StructAccess;
 import ast.expression.Variable;
+import ast.type.IntType;
+import ast.type.StructType;
 
 public class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
     private CodeGenerator cg;
@@ -26,7 +29,12 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(ArrayAccess e, Void param) {
-        return super.visit(e, param);
+        e.getLeft().accept(this, null);
+        e.getAccess().accept(value, null);
+        cg.push(e.getType().numberOfBytes());
+        cg.mul(IntType.getInstance());
+        cg.add(IntType.getInstance());
+        return null;
     }
 
     /**
@@ -37,7 +45,10 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(StructAccess e, Void param) {
-        return super.visit(e, param);
+        e.getLeft().accept(this, null);
+        cg.push(((StructType)e.getLeft().getType()).getField(e.getField()).getOffset());
+        cg.add(IntType.getInstance());
+        return null;
     }
 
     /**
@@ -52,6 +63,13 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(Variable e, Void param) {
-        return super.visit(e, param);
+        if (e.getVarDef().getScope() == 0) {
+            cg.pusha(((VariableDefinition)e.getVarDef()).getOffset());
+        } else {
+            cg.pusha();
+            cg.push(((VariableDefinition)e.getVarDef()).getOffset());
+            cg.add(IntType.getInstance());
+        }
+        return null;
     }
 }
