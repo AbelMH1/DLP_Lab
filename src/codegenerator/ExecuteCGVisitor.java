@@ -4,6 +4,7 @@ import ast.Program;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.statement.*;
+import ast.type.FunctionType;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /**
      * execute[[Program: program -> definition*]]() =
+     *      <' * Global variables:>
      *      for (Definition def: definition*) {
      *          if (def instanceof VarDEf) {
      *              execute[[def]]()
@@ -43,8 +45,13 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
     }
 
     /**
-     * execute[[FunctionDefinition: definition -> type ID vardefinition* statement*]]() =
+     * execute[[FunctionDefinition: funcDefinition -> type ID vardefinition* statement*]]() =
      *      ID < :>
+     *      <' * Parameters:>
+     *      execute[[type]]() // Para añadir comentarios de los parámetros
+     *      <' * Local Variables:>
+     *      vardefinition*.forEach(varDef -> execute[[varDef]]) // Para añadir comentarios de las variables
+     *
      *      int bytesLocals = vardefinition*.isEmpty() ? 0 : -vardefinition*.get(vardefinition*.size()-1).offset;
      *      <enter > bytesLocals
      *
@@ -62,8 +69,17 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
     }
 
     /**
-     * execute[[VariableDefinition: statement -> type ID]]() =
-     *      <' * > type.toString() < > ID < (offset > statement.offset() <)>
+     * execute[[FunctionType: type1 -> type varDefinition*]]() =
+     *      vardefinition*.forEach(varDef -> execute[[varDef]]) // Para añadir comentarios de los parámetros
+     */
+    @Override
+    public Void visit(FunctionType e, Void param) {
+        return super.visit(e, param);
+    }
+
+    /**
+     * execute[[VariableDefinition: varDefinition -> type ID]]() =
+     *      <' * > type.toString() < > ID < (offset > varDefinition.offset() <)>
      */
     @Override
     public Void visit(VariableDefinition e, Void param) {
