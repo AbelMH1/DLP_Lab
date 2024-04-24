@@ -1,12 +1,14 @@
 package codegenerator;
 
+import ast.Definition;
+import ast.Expression;
 import ast.Program;
+import ast.Statement;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.statement.*;
 import ast.type.FunctionType;
-
-import java.util.List;
+import ast.type.VoidType;
 
 public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
 
@@ -41,7 +43,20 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(Program e, Void param) {
-        return super.visit(e, param);
+        cg.commentOL("* Global variables:");
+        for(Definition def: e.getBody()) {
+            if (def instanceof VariableDefinition) {
+                def.accept(this, null);
+            }
+        }
+        cg.call("main");
+        cg.halt();
+        for(Definition def: e.getBody()) {
+            if (def instanceof FunctionDefinition) {
+                def.accept(this, null);
+            }
+        }
+        return null;
     }
 
     /**
@@ -66,7 +81,34 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(FunctionDefinition e, Void param) {
-        return super.visit(e, param);
+        cg.label("ID");
+        // Añadir comentarios de variables y parámetros
+        cg.commentOL("* Parameters:");
+        e.getType().accept(this, null);
+        cg.commentOL("* Local Variables:");
+        var varDefinitions = e.getBody().stream()
+                .filter(stm -> stm instanceof VariableDefinition)
+                .map(stm -> (VariableDefinition)stm).toList();
+        varDefinitions.forEach(varDef -> varDef.accept(this, null));
+
+        int bytesLocals = varDefinitions.isEmpty() ? 0 : -varDefinitions.get(varDefinitions.size()-1).getOffset();
+        cg.enter(bytesLocals);
+
+        var funcType = (FunctionType)e.getType();
+        int bytesParams = funcType.getParams().stream()
+                .mapToInt(varDef -> varDef.getType().numberOfBytes()).sum();
+        int bytesReturn = funcType.getReturnType().numberOfBytes();
+
+        for(Statement stm: e.getBody()) {
+            if (!(stm instanceof VariableDefinition)) {
+                stm.accept(this, null); // TODO: Pasar el resto de parametros para el Return
+            }
+        }
+
+        if (bytesReturn == 0) {
+            cg.ret(bytesReturn, bytesLocals, bytesParams);
+        }
+        return null;
     }
 
     /**
@@ -75,7 +117,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(FunctionType e, Void param) {
-        return super.visit(e, param);
+        e.getParams().forEach(varDef -> varDef.accept(this, null));
+        return null;
     }
 
     /**
@@ -84,7 +127,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(VariableDefinition e, Void param) {
-        return super.visit(e, param);
+        String str = String.format("* %s %s (offset %d)", e.getType().toString(), e.getName(), e.getOffset());
+        cg.commentOL(str);
+        return null;
     }
 
     /**
@@ -95,7 +140,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(Assignment e, Void param) {
-        return super.visit(e, param);
+        e.getLeft().accept(address, null);
+        e.getRight().accept(value, null);
+        cg.store(e.getLeft().getType());
+        return null;
     }
 
     /**
@@ -107,7 +155,13 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(FunctionInvocation e, Void param) {
-        return super.visit(e, param);
+        e.getParameters().forEach(exp -> exp.accept(value, null));
+        cg.call(e.getName().getName());
+        var retType = ((FunctionType)e.getName().getType()).getReturnType();
+        if (!(retType instanceof VoidType)) {
+            cg.pop(retType);
+        }
+        return null;
     }
 
     /**
@@ -124,7 +178,16 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(If e, Void param) {
-        return super.visit(e, param);
+        String elsePart = cg.getNextLabel();
+        String end = cg.getNextLabel();
+        e.getCondition().accept(value, null);
+        cg.jz(elsePart);
+        e.getIfPart().forEach(stm -> stm.accept(this, null));
+        cg.jmp(end);
+        cg.label(elsePart);
+        e.getElsePart().forEach(stm -> stm.accept(this, null));
+        cg.label(end);
+        return null;
     }
 
     /**
@@ -135,7 +198,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(Input e, Void param) {
-        return super.visit(e, param);
+        e.getInput().accept(address, null);
+        cg.in(e.getInput().getType());
+        cg.store(e.getInput().getType());
+        return null;
     }
 
     /**
@@ -147,7 +213,11 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(Print e, Void param) {
-        return super.visit(e, param);
+        for (Expression exp: e.getParameters()) {
+            exp.accept(value, null);
+            cg.out(exp.getType());
+        }
+        return null;
     }
 
     /**
@@ -157,7 +227,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(Return e, Void param) {
-        return super.visit(e, param);
+        e.getExpression().accept(value, null);
+        cg.ret(e.getExpression().getType().numberOfBytes(), 0, 0); // TODO: Pasar el resto de parametros
+        return null;
     }
 
     /**
@@ -173,6 +245,14 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(While e, Void param) {
-        return super.visit(e, param);
+        String condition = cg.getNextLabel();
+        String end = cg.getNextLabel();
+        cg.label(condition);
+        e.getCondition().accept(value, null);
+        cg.jz(end);
+        e.getBody().forEach(stm -> stm.accept(this, null));
+        cg.jmp(condition);
+        cg.label(end);
+        return null;
     }
 }
