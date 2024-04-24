@@ -10,6 +10,7 @@ import java.util.List;
 public class FunctionType extends AbstractType {
     private Type returnType;
     private List<VariableDefinition> params;
+    private int bytesParamSum;
 
     public FunctionType(Type returnType, List<VariableDefinition> params) {
         super(0, 0);
@@ -31,6 +32,14 @@ public class FunctionType extends AbstractType {
 
     public void setParams(List<VariableDefinition> params) {
         this.params = params;
+    }
+
+    public int getBytesParamSum() {
+        return bytesParamSum;
+    }
+
+    public void setBytesParamSum(int bytesParamSum) {
+        this.bytesParamSum = bytesParamSum;
     }
 
     @Override

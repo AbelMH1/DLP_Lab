@@ -6,7 +6,6 @@ import ast.Type;
 import visitor.Visitor;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class StructType extends AbstractType {
     private List<RecordField> fields;
@@ -53,5 +52,11 @@ public class StructType extends AbstractType {
         fields.forEach(recordField -> str.append(recordField.toString()).append(", "));
         str.replace(str.length()-2, str.length(), "}");
         return str.toString();
+    }
+
+    public RecordField getField(String field) {
+        var ret = fields.stream().filter(recordField -> recordField.getName().equals(field)).findFirst();
+        if(ret.isPresent()) return ret.get();
+        throw new IllegalStateException("Debería haberse comprobado la existencia del campo \"" + field + "\" dentro de " + this + " en fases anteriores");
     }
 }

@@ -17,6 +17,7 @@ public class OffSetVisitor extends AbstractVisitor<Void, Void> {
         e.getType().accept(this, param);
         totalLocalOffset = 0;
         e.getBody().forEach(statement -> statement.accept(this, param));
+        e.setBytesLocalSum(totalLocalOffset);
         return null;
     }
 
@@ -29,6 +30,7 @@ public class OffSetVisitor extends AbstractVisitor<Void, Void> {
             varDef.setOffset(totalOffset);
             totalOffset += varDef.getType().numberOfBytes();
         }
+        e.setBytesParamSum(totalOffset-4);
         return null;
     }
 
