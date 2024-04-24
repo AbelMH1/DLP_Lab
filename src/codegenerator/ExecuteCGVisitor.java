@@ -43,16 +43,18 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
      */
     @Override
     public Void visit(Program e, FunctionDefinition param) {
-        cg.commentOL("* Global variables:");
+        cg.commentOL("* Global variables:", 0);
         for(Definition def: e.getBody()) {
             if (def instanceof VariableDefinition) {
                 def.accept(this, param);
             }
         }
-        cg.call("main");
+        cg.commentOL("Invocation to the main function", 0);
+        cg.call("main", 0);
         cg.halt();
         for(Definition def: e.getBody()) {
             if (def instanceof FunctionDefinition) {
+                cg.line(def.getLine());
                 def.accept(this, param);
             }
         }
@@ -83,9 +85,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
     public Void visit(FunctionDefinition e, FunctionDefinition param) {
         cg.label(e.getName());
         // Añadir comentarios de variables y parámetros
-        cg.commentOL("* Parameters:");
+        cg.commentOL("* Parameters", 1);
         e.getType().accept(this, param);
-        cg.commentOL("* Local Variables:");
+        cg.commentOL("* Local variables", 1);
         var varDefinitions = e.getBody().stream()
                 .filter(stm -> stm instanceof VariableDefinition)
                 .map(stm -> (VariableDefinition)stm).toList();
@@ -100,6 +102,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 
         for(Statement stm: e.getBody()) {
             if (!(stm instanceof VariableDefinition)) {
+                cg.line(stm.getLine());
                 stm.accept(this, e);
             }
         }
@@ -127,7 +130,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
     @Override
     public Void visit(VariableDefinition e, FunctionDefinition param) {
         String str = String.format("* %s %s (offset %d)", e.getType().toString(), e.getName(), e.getOffset());
-        cg.commentOL(str);
+        cg.commentOL(str, 1);
         return null;
     }
 
@@ -139,6 +142,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
      */
     @Override
     public Void visit(Assignment e, FunctionDefinition param) {
+        cg.commentOL("* Assignment", 1);
         e.getLeft().accept(address, null);
         e.getRight().accept(value, null);
         cg.store(e.getLeft().getType());
@@ -155,7 +159,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
     @Override
     public Void visit(FunctionInvocation e, FunctionDefinition param) {
         e.getParameters().forEach(exp -> exp.accept(value, null));
-        cg.call(e.getName().getName());
+        cg.call(e.getName().getName(), 1);
         var retType = ((FunctionType)e.getName().getType()).getReturnType();
         if (!(retType instanceof VoidType)) {
             cg.pop(retType);
@@ -177,14 +181,23 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
      */
     @Override
     public Void visit(If e, FunctionDefinition param) {
+        cg.commentOL("* If", 1);
         String elsePart = cg.getNextLabel();
         String end = cg.getNextLabel();
         e.getCondition().accept(value, null);
         cg.jz(elsePart);
-        e.getIfPart().forEach(stm -> stm.accept(this, param));
+        cg.commentOL("* if body", 1);
+        e.getIfPart().forEach(stm -> {
+            cg.line(stm.getLine());
+            stm.accept(this, param);
+        });
         cg.jmp(end);
         cg.label(elsePart);
-        e.getElsePart().forEach(stm -> stm.accept(this, param));
+        cg.commentOL("* else body", 1);
+        e.getElsePart().forEach(stm -> {
+            cg.line(stm.getLine());
+            stm.accept(this, param);
+        });
         cg.label(end);
         return null;
     }
@@ -197,6 +210,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
      */
     @Override
     public Void visit(Input e, FunctionDefinition param) {
+        cg.commentOL("* Read", 1);
         e.getInput().accept(address, null);
         cg.in(e.getInput().getType());
         cg.store(e.getInput().getType());
@@ -213,6 +227,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
     @Override
     public Void visit(Print e, FunctionDefinition param) {
         for (Expression exp: e.getParameters()) {
+            cg.commentOL("* Write", 1);
             exp.accept(value, null);
             cg.out(exp.getType());
         }
@@ -226,6 +241,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
      */
     @Override
     public Void visit(Return e, FunctionDefinition funcDef) {
+        cg.commentOL("* Return", 1);
         e.getExpression().accept(value, null);
         var type = (FunctionType)funcDef.getType();
         cg.ret(type.getReturnType().numberOfBytes(), funcDef.getBytesLocalSum(), type.getBytesParamSum());
@@ -245,12 +261,17 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
      */
     @Override
     public Void visit(While e, FunctionDefinition param) {
+        cg.commentOL("* While", 1);
         String condition = cg.getNextLabel();
         String end = cg.getNextLabel();
         cg.label(condition);
         e.getCondition().accept(value, null);
         cg.jz(end);
-        e.getBody().forEach(stm -> stm.accept(this, param));
+        cg.commentOL("* While body", 1);
+        e.getBody().forEach(stm -> {
+            cg.line(stm.getLine());
+            stm.accept(this, param);
+        });
         cg.jmp(condition);
         cg.label(end);
         return null;

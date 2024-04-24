@@ -1,15 +1,15 @@
 
-#source	"input.txt"
+#source	"input.13.txt"
 
+' * Global variables:
 	' * IntType i (offset 0)
 	' * IntType n (offset 2)
 	' * IntType j (offset 4)
 	' * CharType c (offset 6)
-	' * RecordType[fields:[Field[name:integer,type:IntType offset:0], Field[name:character,type:CharType offset:2]]] pair (offset 7)
-	' * ArrayType[of:ArrayType[of:IntType,size:10],size:10] matrix (offset 10)
-
+	' * StructType{RecordField{integer : IntType}, RecordField{character : CharType}} pair (offset 7)
+	' * ArrayType{ArrayType{IntType[10]}[10]} matrix (offset 10)
 ' Invocation to the main function
-call main
+call	main
 halt
 
 
@@ -109,8 +109,6 @@ halt
 
 #line	28
 	' * While
-
-#line	28
  label0:
 	push	bp
 	pushi	-2
@@ -182,7 +180,6 @@ halt
 	ret	0, 4, 6
 
 #line	35
-
  show:
 	' * Parameters
 	' * IntType row (offset 4)
@@ -200,8 +197,6 @@ halt
 
 #line	38
 	' * While
-
-#line	38
  label2:
 	push	bp
 	pushi	-2
@@ -216,39 +211,27 @@ halt
 	' * Write
 	pushb	40
 	outb
-
-#line	39
 	' * Write
 	push	bp
 	pushi	4
 	addi
 	loadi
 	outi
-
-#line	39
 	' * Write
 	pushb	44
 	outb
-
-#line	39
 	' * Write
 	push	bp
 	pushi	-2
 	addi
 	loadi
 	outi
-
-#line	39
 	' * Write
 	pushb	41
 	outb
-
-#line	39
 	' * Write
 	pushb	58
 	outb
-
-#line	39
 	' * Write
 	pusha	10
 	push	bp
@@ -267,8 +250,6 @@ halt
 	addi
 	loadi
 	outi
-
-#line	39
 	' * Write
 	pushb	32
 	outb
@@ -295,7 +276,6 @@ halt
 	ret	0, 2, 2
 
 #line	46
-
  main:
 	' * Parameters
 	' * Local variables
@@ -344,8 +324,6 @@ halt
 	b2i
 	call	f
 	outi
-
-#line	53
 	' * Write
 	pushb	10
 	outb
@@ -372,8 +350,6 @@ halt
 
 #line	59
 	' * While
-
-#line	59
  label4:
 	push	bp
 	pushi	-2

@@ -13,7 +13,7 @@ halt
  main:
 	' * Parameters
 	' * Local variables
-	' * RealType value (offset -4)
+	' * DoubleType value (offset -4)
 	' * IntType i (offset -6)
 	' * IntType j (offset -8)
 	' * ArrayType[of:ArrayType[of:IntType,size:5],size:4] w (offset -48)

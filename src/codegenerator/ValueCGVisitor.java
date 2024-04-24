@@ -24,7 +24,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     @Override
     public Void visit(FunctionInvocation e, Void param) {
         e.getParameters().forEach(exp -> exp.accept(this, null));
-        cg.call(e.getName().getName());
+        cg.call(e.getName().getName(), 1);
         return null;
     }
 
