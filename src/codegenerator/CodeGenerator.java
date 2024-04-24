@@ -46,12 +46,12 @@ public class CodeGenerator {
     }
 
     public void pusha(int address) {
-        out.println("pusha"  + address);
+        out.println("pusha "  + address);
         out.flush();
     }
 
-    public void pusha() {
-        out.println("pusha bp");
+    public void push() {
+        out.println("push bp");
         out.flush();
     }
 
@@ -208,29 +208,29 @@ public class CodeGenerator {
 
     public void arithmetic(String operator, Type type) {
         switch (operator) {
-            case "+": add(type); break;
-            case "-": sub(type); break;
-            case "*": div(type); break;
-            case "/": mul(type); break;
-            case "%": mod(type); break;
+            case "+" -> add(type);
+            case "-" -> sub(type);
+            case "*" -> mul(type);
+            case "/" -> div(type);
+            case "%" -> mod(type);
         }
     }
 
     public void comparison(String operator, Type type) {
         switch (operator) {
-            case ">": gt(type); break;
-            case ">=": ge(type); break;
-            case "<": lt(type); break;
-            case "<=": le(type); break;
-            case "!=": ne(type); break;
-            case "==": eq(type); break;
+            case ">" -> gt(type);
+            case ">=" -> ge(type);
+            case "<" -> lt(type);
+            case "<=" -> le(type);
+            case "!=" -> ne(type);
+            case "==" -> eq(type);
         }
     }
 
     public void logical(String operator) {
         switch (operator) {
-            case "&&": and(); break;
-            case "||": or(); break;
+            case "&&" -> and();
+            case "||" -> or();
         }
     }
 

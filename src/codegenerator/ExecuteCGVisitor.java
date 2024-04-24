@@ -81,7 +81,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(FunctionDefinition e, Void param) {
-        cg.label("ID");
+        cg.label(e.getName());
         // Añadir comentarios de variables y parámetros
         cg.commentOL("* Parameters:");
         e.getType().accept(this, null);

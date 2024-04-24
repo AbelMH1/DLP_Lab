@@ -48,10 +48,12 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /**
      * value[[Cast: expression1 -> type expression2]]() =
+     *      value[[expression2]]()
      *      cg.convert(expression2.type, type);
      */
     @Override
     public Void visit(Cast e, Void param) {
+        e.getExpression().accept(this, null);
         cg.convert(e.getExpression().getType(), e.getCastType());
         return null;
     }
