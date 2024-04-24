@@ -3,7 +3,7 @@ package codegenerator;
 import ast.Type;
 import ast.type.IntType;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public class CodeGenerator {
@@ -15,9 +15,16 @@ public class CodeGenerator {
         try {
             this.out = new PrintWriter(outputFilename);
             this.labelCounter = 0;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.err.println("Error oppening the file " + outputFilename + ".");
+            System.exit(-1);
         }
+        this.source(inputFilename);
+    }
+
+    private void source(String inputFilename) {
+        out.println("\n#source\t\"" + inputFilename + "\"\n");
+        out.flush();
     }
 
     public String getNextLabel(){
