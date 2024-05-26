@@ -1,0 +1,17 @@
+# Global variables
+i1,i2,i3,i4: int;
+c1,c2,c3,c4: char;
+
+# Main program
+def main(): {
+  i1 = i2 = i3 = 3;
+  c1 = c2 = c3 = 'a';
+  i4 = i2;
+  c4 = c1;
+  print i1, ' ', i2, ' ', i3, ' ', i4, '\n';
+  print c1, ' ', c2, ' ', c3, ' ', c4, '\n';
+  i1 = i3 = -4;
+  c2 = c4 = 'b';
+  print i1, ' ', i2, ' ', i3, ' ', i4, '\n';
+  print c1, ' ', c2, ' ', c3, ' ', c4, '\n';
+}

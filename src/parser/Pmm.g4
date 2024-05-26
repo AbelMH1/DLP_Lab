@@ -83,9 +83,17 @@ statement returns [List<Statement> list = new ArrayList<>()]:
             | OP='input' params ';'         {$params.list.forEach((statement -> $list.add(new Input(statement.getLine(), statement.getColumn(), statement)))); }
             | OP='return' expression ';'    {$list.add(new Return($OP.getLine(), $OP.getCharPositionInLine()+1, $expression.ast)); }
             | ID '(' params? ')' ';'        {$list.add(new FunctionInvocation($ID.getLine(), $ID.getCharPositionInLine()+1, new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text), $params.ctx != null ? $params.list : new ArrayList<Expression>())); }
-            | expression1 = expression OP='=' expression2 = expression ';'  {$list.add(new Assignment($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast, $expression2.ast)); }
+            | leftAssignments OP='=' expression2 = expression ';'  {
+                                                                        for(Expression exp : $leftAssignments.list){
+                                                                            $list.add(new Assignment($OP.getLine(), $OP.getCharPositionInLine()+1, exp, $expression2.ast));
+                                                                        }
+                                                                    }
             | OP='if' expression ':' body1 = body ('else' ':' body2 = body)?    {$list.add(new If($OP.getLine(), $OP.getCharPositionInLine()+1, $expression.ast, $body1.list, $body2.ctx != null ? $body2.list : new ArrayList<Statement>())); }
             | OP='while' expression ':' body    {$list.add(new While($OP.getLine(), $OP.getCharPositionInLine()+1, $expression.ast, $body.list)); }
+;
+
+leftAssignments returns [List<Expression> list = new ArrayList<>()]:
+    expression1 = expression ('=' expression2 = expression {$list.add($expression2.ast); })* {$list.add($expression1.ast); }
 ;
 
 body returns [List<Statement> list = new ArrayList<>()]:
