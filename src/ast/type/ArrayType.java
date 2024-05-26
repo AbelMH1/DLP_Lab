@@ -47,6 +47,12 @@ public class ArrayType extends AbstractType {
     }
 
     @Override
+    public Type squareBracketsComparison(Type other, ASTNode ast) {
+        if (other == of) return other;
+        return new ErrorType(ast.getLine(), ast.getColumn(), "No se pueden realizar operaciones de comparación de arrays entre \"" + of + "\" y \"" + other.toString() + "\"");
+    }
+
+    @Override
     public String toString() {
         return "ArrayType{" + of.toString() + "[" + size + "]" + '}';
     }

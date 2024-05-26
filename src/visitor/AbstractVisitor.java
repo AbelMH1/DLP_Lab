@@ -203,4 +203,11 @@ public class AbstractVisitor<TP,TR> implements Visitor<TP,TR> {
         e.getParams().forEach(varDef -> varDef.accept(this, param));
         return null;
     }
+
+    @Override
+    public TR visit(ArrayComparison e, TP param) {
+        e.getLeft().accept(this, param);
+        e.getRight().accept(this, param);
+        return null;
+    }
 }

@@ -20,4 +20,5 @@ public interface Type extends ASTNode {
     Type asBuiltInType(ASTNode ast); // Para los tipos básicos (Int, Double, Char)
     boolean isBuiltInType(); // Para los tipos básicos (Int, Double, Char), pero sin generar errores
     Type asLogical(ASTNode ast); // Para los tipos básicos (Int, Double, Char)
+    Type squareBracketsComparison(Type other,ASTNode ast); // Para operaciones de comparación entre arrays
 }

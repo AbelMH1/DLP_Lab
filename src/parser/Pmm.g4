@@ -109,6 +109,7 @@ expression returns [Expression ast]:
             |/* <assoc=left> */ expression1 = expression OP=('*'|'/'|'%') expression2 = expression  {$ast = new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
             | expression1 = expression OP=('+'|'-') expression2 = expression                        {$ast = new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
             | expression1 = expression OP=('>'|'>='|'<'|'<='|'!='|'==') expression2 = expression    {$ast = new Comparison($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
+            | expression1 = expression '[]' OP=('>'|'>='|'<'|'<='|'!='|'==') expression2 = expression    {$ast = new ArrayComparison($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
             | expression1 = expression OP='&&' expression2 = expression    {$ast = new Logical($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
             | expression1 = expression OP='||' expression2 = expression    {$ast = new Logical($OP.getLine(), $OP.getCharPositionInLine()+1, $OP.text, $expression1.ast, $expression2.ast); }
             ;

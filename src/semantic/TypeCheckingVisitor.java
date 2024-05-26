@@ -181,4 +181,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Boolean> {
         e.setType(e.getExpression().getType().canBeCastTo(e.getCastType(), e));
         return null;
     }
+
+    @Override
+    public Boolean visit(ArrayComparison e, Type param) {
+        e.getLeft().accept(this, param);
+        e.getRight().accept(this, param);
+        e.setType(e.getLeft().getType().squareBracketsComparison(e.getRight().getType(), e));
+        return null;
+    }
 }

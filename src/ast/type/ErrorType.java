@@ -80,4 +80,9 @@ public class ErrorType extends AbstractType {
     public Type asBuiltInType(ASTNode ast) {
         return this;
     }
+
+    @Override
+    public Type squareBracketsComparison(Type other, ASTNode ast) {
+        return this;
+    }
 }
