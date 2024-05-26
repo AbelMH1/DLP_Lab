@@ -86,11 +86,20 @@ statement returns [List<Statement> list = new ArrayList<>()]:
             | expression1 = expression OP='=' expression2 = expression ';'  {$list.add(new Assignment($OP.getLine(), $OP.getCharPositionInLine()+1, $expression1.ast, $expression2.ast)); }
             | OP='if' expression ':' body1 = body ('else' ':' body2 = body)?    {$list.add(new If($OP.getLine(), $OP.getCharPositionInLine()+1, $expression.ast, $body1.list, $body2.ctx != null ? $body2.list : new ArrayList<Statement>())); }
             | OP='while' expression ':' body    {$list.add(new While($OP.getLine(), $OP.getCharPositionInLine()+1, $expression.ast, $body.list)); }
+            | OP='switch' '(' expression ')' '{' cases '}'   {$list.add(new Switch($OP.getLine(), $OP.getCharPositionInLine()+1, $expression.ast, $cases.list)); }
 ;
 
 body returns [List<Statement> list = new ArrayList<>()]:
     '{'? statement '}'? {$list.addAll($statement.list); }
     | '{' (statement {$list.addAll($statement.list); })+ '}'
+;
+
+cases returns [List<SwitchCase> list = new ArrayList<>()] locals[List<Statement> statements = new ArrayList<>()]:
+    (OP='case' expression ':' statementsList {$list.add(new SwitchCase($OP.getLine(), $OP.getCharPositionInLine()+1, $expression.ast, $statementsList.list)); } )+
+;
+
+statementsList returns [List<Statement> list = new ArrayList<>()]:
+    (statement {$list.addAll($statement.list); })+
 ;
 
 

@@ -2,6 +2,7 @@ package visitor;
 
 import ast.Program;
 import ast.RecordField;
+import ast.SwitchCase;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.expression.*;
@@ -82,4 +83,8 @@ public interface Visitor<TP, TR> {
     TR visit(VoidType e, TP param);
 
     TR visit(FunctionType e, TP param);
+
+    TR visit(Switch e, TP param);
+
+    TR visit(SwitchCase e, TP param);
 }

@@ -1,6 +1,7 @@
 package semantic;
 
 import ast.Expression;
+import ast.SwitchCase;
 import ast.Type;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
@@ -179,6 +180,21 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Boolean> {
         e.getCastType().accept(this, param);
         e.getExpression().accept(this, param);
         e.setType(e.getExpression().getType().canBeCastTo(e.getCastType(), e));
+        return null;
+    }
+
+    @Override
+    public Boolean visit(Switch e, Type param) {
+        e.getCondition().accept(this, param);
+        e.getBody().forEach(switchCase -> switchCase.accept(this, e.getCondition().getType()));
+        return false;
+    }
+
+    @Override
+    public Boolean visit(SwitchCase e, Type switchCondition) {
+        e.getCondition().accept(this, switchCondition);
+        e.getCondition().getType().comparison(switchCondition, e);
+        e.getBody().forEach(statement -> statement.accept(this, switchCondition));
         return null;
     }
 }

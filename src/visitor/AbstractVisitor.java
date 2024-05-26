@@ -2,6 +2,7 @@ package visitor;
 
 import ast.Program;
 import ast.RecordField;
+import ast.SwitchCase;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.expression.*;
@@ -201,6 +202,20 @@ public class AbstractVisitor<TP,TR> implements Visitor<TP,TR> {
     public TR visit(FunctionType e, TP param) {
         e.getReturnType().accept(this, param);
         e.getParams().forEach(varDef -> varDef.accept(this, param));
+        return null;
+    }
+
+    @Override
+    public TR visit(Switch e, TP param) {
+        e.getCondition().accept(this, param);
+        e.getBody().forEach(switchCase -> switchCase.accept(this, param));
+        return null;
+    }
+
+    @Override
+    public TR visit(SwitchCase e, TP param) {
+        e.getCondition().accept(this, param);
+        e.getBody().forEach(statement -> statement.accept(this,param));
         return null;
     }
 }

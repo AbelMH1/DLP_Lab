@@ -2,6 +2,7 @@ package codegenerator;
 
 import ast.Program;
 import ast.RecordField;
+import ast.SwitchCase;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.expression.*;
@@ -163,6 +164,16 @@ public class AbstractCGVisitor<TP,TR> implements Visitor<TP,TR> {
 
     @Override
     public TR visit(FunctionType e, TP param) {
+        throw new IllegalStateException("Invocación inválida en: " + e.getClass().getName());
+    }
+
+    @Override
+    public TR visit(Switch e, TP param) {
+        throw new IllegalStateException("Invocación inválida en: " + e.getClass().getName());
+    }
+
+    @Override
+    public TR visit(SwitchCase e, TP param) {
         throw new IllegalStateException("Invocación inválida en: " + e.getClass().getName());
     }
 }

@@ -1,9 +1,6 @@
 package codegenerator;
 
-import ast.Definition;
-import ast.Expression;
-import ast.Program;
-import ast.Statement;
+import ast.*;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.statement.*;
@@ -273,6 +270,45 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
             stm.accept(this, param);
         });
         cg.jmp(condition);
+        cg.label(end);
+        return null;
+    }
+
+    /**
+     * execute[[Switch: statement -> expression switchCase*]]() =
+     *      String end = cg.nextLabel()
+     *      for (SwitchCase case : switchCase*){
+     *          String nextCase = cg.nextLabel()
+     *
+     *          value[[expression]]()
+     *          value[[case.condition]]()
+     *          cg.comparison('==', expression.type)
+     *          <jz> nextCase
+     *
+     *          case.body.forEach(statement ->execute[[statement]]() )
+     *          <jmp> end
+     *
+     *          nextCase < :>
+     *      }
+     *      end < :>
+     */
+    @Override
+    public Void visit(Switch e, FunctionDefinition param) {
+        String end = cg.getNextLabel();
+        String nextCase;
+        for(SwitchCase switchCase: e.getBody()) {
+            nextCase = cg.getNextLabel();
+
+            e.getCondition().accept(value, null);
+            switchCase.getCondition().accept(value,null);
+            cg.comparison("==", e.getCondition().getType());
+            cg.jz(nextCase);
+
+            switchCase.getBody().forEach(statement -> statement.accept(this, param));
+            cg.jmp(end);
+
+            cg.label(nextCase);
+        }
         cg.label(end);
         return null;
     }
