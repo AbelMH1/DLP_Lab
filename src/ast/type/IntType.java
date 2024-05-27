@@ -46,19 +46,8 @@ public class IntType extends AbstractType {
 
     @Override
     public Type comparison(Type other, ASTNode ast) {
-        if (other == this) return other;
+        if (other == this) return BooleanType.getInstance();
         return super.comparison(other, ast);
-    }
-
-    @Override
-    public Type logic(Type other, ASTNode ast) {
-        if (other == this) return other;
-        return super.logic(other, ast);
-    }
-
-    @Override
-    public Type logic(ASTNode ast) {
-        return this;
     }
 
     @Override
@@ -86,11 +75,6 @@ public class IntType extends AbstractType {
     @Override
     public boolean isBuiltInType() {
         return true;
-    }
-
-    @Override
-    public Type asLogical(ASTNode ast) {
-        return this;
     }
 
     @Override

@@ -7,6 +7,8 @@ import ast.Statement;
 import ast.definition.FunctionDefinition;
 import ast.definition.VariableDefinition;
 import ast.statement.*;
+import ast.type.BooleanType;
+import ast.type.CharType;
 import ast.type.FunctionType;
 import ast.type.VoidType;
 
@@ -221,7 +223,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
      * execute[[Print: statement -> expression*]]() =
      *      for (Expression exp: expression*) {
      *          value[[exp]]()
-     *          <out> exp.type.sufix()
+     *          if (exp.type == BooleanType)
+     *              cg.showBoolean()
+     *          else
+     *              <out> exp.type.sufix()
      *      }
      */
     @Override
@@ -229,9 +234,40 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
         for (Expression exp: e.getParameters()) {
             cg.commentOL("* Write", 1);
             exp.accept(value, null);
-            cg.out(exp.getType());
+            if (exp.getType() instanceof BooleanType) {
+                showBoolean();
+            } else {
+                cg.out(exp.getType());
+            }
         }
         return null;
+    }
+
+    private void showBoolean(){
+        String f = cg.getNextLabel();
+        String end = cg.getNextLabel();
+        cg.jz(f);
+        cg.push('t');
+        cg.out(CharType.getInstance());
+        cg.push('r');
+        cg.out(CharType.getInstance());
+        cg.push('u');
+        cg.out(CharType.getInstance());
+        cg.push('e');
+        cg.out(CharType.getInstance());
+        cg.jmp(end);
+        cg.label(f);
+        cg.push('f');
+        cg.out(CharType.getInstance());
+        cg.push('a');
+        cg.out(CharType.getInstance());
+        cg.push('l');
+        cg.out(CharType.getInstance());
+        cg.push('s');
+        cg.out(CharType.getInstance());
+        cg.push('e');
+        cg.out(CharType.getInstance());
+        cg.label(end);
     }
 
     /**

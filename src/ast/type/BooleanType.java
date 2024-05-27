@@ -4,28 +4,23 @@ import ast.ASTNode;
 import ast.Type;
 import visitor.Visitor;
 
-public class DoubleType extends AbstractType {
-    private static DoubleType instance;
+public class BooleanType extends AbstractType {
+    private static BooleanType instance;
 
-    private DoubleType() {
+    private BooleanType() {
         super(0, 0);
     }
 
-    public static DoubleType getInstance() {
+    public static BooleanType getInstance() {
         if (instance == null) {
-            instance = new DoubleType();
+            instance = new BooleanType();
         }
         return instance;
     }
 
     @Override
-    public int numberOfBytes() {
-        return 4;
-    }
-
-    @Override
     public char suffix() {
-        return 'f';
+        return 'i';
     }
 
     @Override
@@ -34,26 +29,14 @@ public class DoubleType extends AbstractType {
     }
 
     @Override
-    public Type arithmetic(Type other, ASTNode ast) {
+    public Type logic(Type other, ASTNode ast) {
         if (other == this) return other;
-        return super.arithmetic(other, ast);
+        return super.logic(other, ast);
     }
 
     @Override
-    public Type arithmetic(ASTNode ast) {
+    public Type logic(ASTNode ast) {
         return this;
-    }
-
-    @Override
-    public Type comparison(Type other, ASTNode ast) {
-        if (other == this) return BooleanType.getInstance();
-        return super.comparison(other, ast);
-    }
-
-    @Override
-    public Type canBeCastTo(Type other, ASTNode ast) {
-        if (other.isBuiltInType()) return other;
-        return super.canBeCastTo(other, ast);
     }
 
     @Override
@@ -68,6 +51,11 @@ public class DoubleType extends AbstractType {
     }
 
     @Override
+    public Type asLogical(ASTNode ast) {
+        return this;
+    }
+
+    @Override
     public Type asBuiltInType(ASTNode ast) {
         return this;
     }
@@ -79,6 +67,6 @@ public class DoubleType extends AbstractType {
 
     @Override
     public String toString() {
-        return "DoubleType";
+        return "BooleanType";
     }
 }

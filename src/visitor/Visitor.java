@@ -82,4 +82,6 @@ public interface Visitor<TP, TR> {
     TR visit(VoidType e, TP param);
 
     TR visit(FunctionType e, TP param);
+
+    TR visit(BooleanType e, TP param);
 }

@@ -198,7 +198,7 @@ public class CodeGenerator {
     }
 
     public void convert(Type type1, Type type2) {
-        if (type1.canPromoteTo(type2)) return;
+        if (type1.canPromoteTo(type2) || (type1.suffix() == type2.suffix())) return;
         indentLine(1);
         if (type1 instanceof IntType || type2 instanceof IntType) {
             out.println(type1.suffix() + "2" + type2.suffix());

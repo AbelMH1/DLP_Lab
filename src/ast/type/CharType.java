@@ -46,7 +46,7 @@ public class CharType extends AbstractType {
 
     @Override
     public Type comparison(Type other, ASTNode ast) {
-        if (other == this) return other;
+        if (other == this) return BooleanType.getInstance();
         return super.comparison(other, ast);
     }
 

@@ -165,4 +165,9 @@ public class AbstractCGVisitor<TP,TR> implements Visitor<TP,TR> {
     public TR visit(FunctionType e, TP param) {
         throw new IllegalStateException("Invocación inválida en: " + e.getClass().getName());
     }
+
+    @Override
+    public TR visit(BooleanType e, TP param) {
+        throw new IllegalStateException("Invocación inválida en: " + e.getClass().getName());
+    }
 }

@@ -203,4 +203,9 @@ public class AbstractVisitor<TP,TR> implements Visitor<TP,TR> {
         e.getParams().forEach(varDef -> varDef.accept(this, param));
         return null;
     }
+
+    @Override
+    public TR visit(BooleanType e, TP param) {
+        return null;
+    }
 }
