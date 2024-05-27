@@ -1,0 +1,22 @@
+caracter:char;
+entero:int;
+real:double;
+
+# Functions
+def p(c: char, i:int, d:double):double {
+    return c;
+}
+
+# Main program
+def main(): {
+    caracter = '0';
+    entero = 1 + 1;
+    real = 1.5 + '0';
+
+    print caracter, '\n';
+    print entero, '\n';
+    print real, '\n';
+
+    print p(caracter, '0', real);
+}
+

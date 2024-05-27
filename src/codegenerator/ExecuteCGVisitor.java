@@ -158,9 +158,14 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
      */
     @Override
     public Void visit(FunctionInvocation e, FunctionDefinition param) {
-        e.getParameters().forEach(exp -> exp.accept(value, null));
+        var funcType = (FunctionType)e.getName().getType();
+        for(int i = 0; i < e.getParameters().size(); i++) {
+            e.getParameters().get(i).accept(value, null);
+            // FIXME: No está generando bien las instrucciones de conversión de tipos
+            cg.convert(e.getParameters().get(i).getType(), funcType.getParams().get(i).getType());
+        }
         cg.call(e.getName().getName(), 1);
-        var retType = ((FunctionType)e.getName().getType()).getReturnType();
+        var retType = funcType.getReturnType();
         if (!(retType instanceof VoidType)) {
             cg.pop(retType);
         }
@@ -244,6 +249,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
         cg.commentOL("* Return", 1);
         e.getExpression().accept(value, null);
         var type = (FunctionType)funcDef.getType();
+        cg.convert(e.getExpression().getType(), type.getReturnType());
         cg.ret(type.getReturnType().numberOfBytes(), funcDef.getBytesLocalSum(), type.getBytesParamSum());
         return null;
     }

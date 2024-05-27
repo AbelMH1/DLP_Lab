@@ -35,7 +35,7 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type arithmetic(Type other, ASTNode ast) {
-        if (other == this) return other;
+        if (other.canPromoteTo(this)) return this;
         return super.arithmetic(other, ast);
     }
 
@@ -46,7 +46,7 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type comparison(Type other, ASTNode ast) {
-        if (other == this) return other;
+        if (other.canPromoteTo(this)) return this;
         return super.comparison(other, ast);
     }
 

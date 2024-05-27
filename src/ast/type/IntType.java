@@ -35,7 +35,8 @@ public class IntType extends AbstractType {
 
     @Override
     public Type arithmetic(Type other, ASTNode ast) {
-        if (other == this || other instanceof CharType) return IntType.getInstance();
+        if (other.canPromoteTo(this)) return this;
+        if (this.canPromoteTo(other)) return other;
         return super.arithmetic(other, ast);
     }
 
@@ -46,7 +47,8 @@ public class IntType extends AbstractType {
 
     @Override
     public Type comparison(Type other, ASTNode ast) {
-        if (other == this) return other;
+        if (other.canPromoteTo(this)) return this;
+        if (this.canPromoteTo(other)) return other;
         return super.comparison(other, ast);
     }
 
@@ -69,13 +71,13 @@ public class IntType extends AbstractType {
 
     @Override
     public Type promotesTo(Type other, ASTNode ast) {
-        if (other == this) return other;
+        if (other == this || other == DoubleType.getInstance()) return other;
         return super.promotesTo(other, ast);
     }
 
     @Override
     public boolean canPromoteTo(Type other) {
-        return other == this;
+        return other == this || other == DoubleType.getInstance();
     }
 
     @Override

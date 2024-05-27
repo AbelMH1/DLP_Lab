@@ -1,6 +1,8 @@
 package codegenerator;
 
 import ast.Type;
+import ast.type.CharType;
+import ast.type.DoubleType;
 import ast.type.IntType;
 
 import java.io.IOException;
@@ -198,14 +200,14 @@ public class CodeGenerator {
     }
 
     public void convert(Type type1, Type type2) {
-        if (type1.canPromoteTo(type2)) return;
-        indentLine(1);
-        if (type1 instanceof IntType || type2 instanceof IntType) {
-            out.println(type1.suffix() + "2" + type2.suffix());
-        } else {
-            out.println(type1.suffix() + "2i");
+        if (type1.equals(type2)) return;
+        if (type1 instanceof CharType) {
             indentLine(1);
-            out.println("i2" + type2.suffix());
+            out.println("c2i");
+        }
+        if (type2 instanceof DoubleType) {
+            indentLine(1);
+            out.println("i2f");
         }
         out.flush();
     }
